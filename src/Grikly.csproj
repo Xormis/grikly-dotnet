@@ -42,10 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cards.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="GriklyApi.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Users.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
