@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Grikly.Utilities;
 using RestSharp;
 
 namespace Grikly
@@ -40,7 +41,7 @@ namespace Grikly
             {
                 client = new RestClient(Configuration.BASE_URL);
             }
-            //client.AddHandler("application/json", new DynamicJsonDeserializer());
+            client.AddHandler("application/json", new DynamicJsonDeserializer());
         }
 
     }
