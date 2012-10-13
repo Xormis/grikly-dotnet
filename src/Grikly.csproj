@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounts.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="GriklyApi.cs" />
