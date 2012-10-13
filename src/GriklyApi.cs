@@ -42,5 +42,10 @@ namespace Grikly
             client.AddHandler("application/json", new DynamicJsonDeserializer());
         }
 
+        public void AddValidUserCredentials(int userId, string password)
+        {
+            UserId = userId;
+            Password = password;
+        }
     }
 }
