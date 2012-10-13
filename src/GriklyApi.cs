@@ -46,6 +46,9 @@ namespace Grikly
         {
             UserId = userId;
             Password = password;
+
+            client.AddDefaultHeader("UserId", UserId.ToString());
+            client.AddDefaultHeader("Password", Password);
         }
     }
 }
