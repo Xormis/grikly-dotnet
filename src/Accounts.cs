@@ -9,9 +9,15 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public User GetUser(int id)
+        public User GetValidUser(string email, string password)
         {
             throw new NotImplementedException();
         }
+
+        public User GetValidUser(int userId, string password)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace Grikly
         
         
         //intention is to remove usernames and password requirements in version 2 (using OAUTH)
-        public string Username { get; private set; }
+        public int UserId { get; private set; }
         public string Password { get; private set; }
 
 
@@ -27,11 +27,9 @@ namespace Grikly
 
         #endregion Fields  
 
-        public GriklyApi(string apiKey, string username, string password, bool useSsl = true)
+        public GriklyApi(string apiKey, bool useSsl = true)
         {
             ApiKey = apiKey;
-            Username = username;
-            Password = password;
 
             if (useSsl)
             {
