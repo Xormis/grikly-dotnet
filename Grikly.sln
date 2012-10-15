@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grikly", "src\Grikly.csproj", "{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{14C4FDB7-D299-43DD-95EB-27E148EB3998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grikly.Tests", "tests\\Grikly.Tests.csproj", "{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grikly.Tests", "tests\Grikly.Tests.csproj", "{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GriklyApi.Portable", "src\GriklyApi.Portable\GriklyApi.Portable.csproj", "{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +15,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7C19315A-F8AF-4241-BDC4-BB1D828A2BAB} = {FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259} = {FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F} = {14C4FDB7-D299-43DD-95EB-27E148EB3998}
 	EndGlobalSection
 EndGlobal
