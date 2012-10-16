@@ -75,6 +75,7 @@ namespace Grikly
                 }
                 catch(WebException webException)
                 {
+                    //Catch the exeption here and return properly formatted model.
                     using (WebResponse response = webException.Response)
                     {
                         HttpWebResponse httpResponse = (HttpWebResponse)response;
