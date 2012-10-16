@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
+using System.Net;
 using System.Text;
 using Grikly.Models;
+using System;
 
 namespace Grikly
 {
     public partial class GriklyApi
     {
-        public User GetUser(int id)
+        public void GetUser(int id, Action<User> callback)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
