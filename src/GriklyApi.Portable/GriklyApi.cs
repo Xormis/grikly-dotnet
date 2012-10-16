@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Grikly.Models;
-using Grikly.Utilities;
 using Newtonsoft.Json;
 
 namespace Grikly
@@ -56,10 +55,17 @@ namespace Grikly
                     {
                         StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                         String responseString = reader.ReadToEnd();
-                        //deserialize the response string into the expected class.
-                        //may throw error here, not sure yet, need to test
-                        var response = JsonConvert.DeserializeObject<T>(responseString);
 
+                        //deserialize the response string into the expected class.
+                        T response = null;
+                        try
+                        {
+                            JsonConvert.DeserializeObject<T>(responseString);
+                        }
+                        catch(Exception ex)
+                        {
+                            
+                        }
                         callback(new RequestResult<T>
                                      {
                                          IsError = false,
@@ -76,10 +82,22 @@ namespace Grikly
                         using (Stream data = response.GetResponseStream())
                         {
                             string body = new StreamReader(data).ReadToEnd();
+
+                            //try to deserialize the message
+                            ErrorMessage errorMessage = null;
+                            try
+                            {
+                                errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(body);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+
                             var errorResponse = new ErrorResponse
                                                     {
                                                         HttpStatusCode = httpResponse.StatusCode,
-                                                        Message = body
+                                                        Message = errorMessage
                                                     };
    
                             callback(new RequestResult<T>
@@ -92,25 +110,5 @@ namespace Grikly
                 }
             }, wr);
         }
-    }
-
-    public class RequestResult<T> where T: class
-    {
-        public T Result { get; set; }
-        public bool IsError { get; set; }
-        public ErrorResponse Error { get; set; }
-    }
-
-    public class ErrorResponse
-    {
-        public HttpStatusCode HttpStatusCode;
-        public ErrorMessage Message;
-    }
-
-    public class ErrorMessage
-    {
-        public string Message { get; set; }
-        public string ExceptionMessage { get; set; }
-        public string ExceptionType { get; set; }
     }
 }
