@@ -8,9 +8,10 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public void GetUser(int id, Action<User> callback)
+        public void GetUser(int id, Action<IResponseResult<User>> callback)
         {
-
+            string path = string.Format("Users/{0}", id);
+            Execute(path, "GET", callback);
         }
     }
 }
