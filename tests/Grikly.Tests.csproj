@@ -48,6 +48,12 @@
     <Compile Include="IntegrationTests\Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\GriklyApi.Portable\GriklyApi.Portable.csproj">
+      <Project>{bebf6bac-d80b-4591-9e98-3d01aa8f9259}</Project>
+      <Name>GriklyApi.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

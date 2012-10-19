@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Newtonsoft.Json;
+using Grikly.Models;
 
 namespace Grikly.Tests.IntegrationTests
 {
@@ -20,10 +22,15 @@ namespace Grikly.Tests.IntegrationTests
         [Test]
         public void test()
         {
-            string l = "{test2:\"lol\", test1:\"val for test1\"}";
+            GriklyApi api = new GriklyApi("");
 
-            lol fsdfs = JsonConvert.DeserializeObject<lol>(l);
+            var completion = new ManualResetEvent(false);
 
+            api.Execute<Card>("Cards/1/", "GET", (result) =>
+                                                  {
+                                                      completion.Set();
+                                                  });
+            completion.WaitOne();
         }
     }
 }

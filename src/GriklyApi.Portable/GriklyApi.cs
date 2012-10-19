@@ -32,12 +32,12 @@ namespace Grikly
             Password = password;
 
         }
-
-        public void Execute<T>(string path, string method, Action<RequestResult<T>> callback) where T : class 
+        
+        public void Execute(string path, string method, Action<IResponseResult> callback)
         {
             //build up the uri
             UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL);
-            uriBuilder.Path = path;
+            uriBuilder.Path += path;
 
             var wr = HttpWebRequest.Create(uriBuilder.Uri);
             wr.Headers["UserId"] = UserId.ToString();
@@ -53,27 +53,21 @@ namespace Grikly
 
                     using (Stream stream = resp.GetResponseStream())
                     {
-                        StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                        String responseString = reader.ReadToEnd();
+                        //memory stream needed because we need to convert the stream to a byte array
+                        var memoryStream = new MemoryStream();
+                        stream.CopyTo(memoryStream);
 
-                        //deserialize the response string into the expected class.
-                        T response = null;
-                        try
+
+                        callback(new ResponseResult
                         {
-                            JsonConvert.DeserializeObject<T>(responseString);
-                        }
-                        catch(Exception ex)
-                        {
-                            
-                        }
-                        callback(new RequestResult<T>
-                                     {
-                                         IsError = false,
-                                         Result = response
-                                     });
+                            IsError = false,
+                            RawBytes = memoryStream.ToArray(),
+                            ContentLength = resp.ContentLength,
+                            ContentType = resp.ContentType
+                        });
                     }
                 }
-                catch(WebException webException)
+                catch (WebException webException)
                 {
                     //Catch the exeption here and return properly formatted model.
                     using (WebResponse response = webException.Response)
@@ -96,20 +90,33 @@ namespace Grikly
                             }
 
                             var errorResponse = new ErrorResponse
-                                                    {
-                                                        HttpStatusCode = httpResponse.StatusCode,
-                                                        Message = errorMessage
-                                                    };
-   
-                            callback(new RequestResult<T>
-                                         {
-                                             IsError = true,
-                                             Error = errorResponse,
-                                         });
+                            {
+                                HttpStatusCode = httpResponse.StatusCode,
+                                Message = errorMessage
+                            };
+
+                            callback(new ResponseResult
+                            {
+                                IsError = true,
+                                Error = errorResponse,
+                            });
                         }
                     }
                 }
             }, wr);
+        }
+
+        public void Execute<T>(string path, string method, Action<IResponseResult<T>> callback) where T : class 
+        {
+            Execute(path, method, result =>
+                                      {
+                                          //deserialize
+                                          string data = Encoding.UTF8.GetString(result.RawBytes, 0, result.RawBytes.Length);
+                                          var objData = JsonConvert.DeserializeObject<T>(data);
+                                          IResponseResult<T> res = result as IResponseResult<T>;
+                                          res.Data = objData;
+                                          callback(res);
+                                      });
         }
     }
 }
