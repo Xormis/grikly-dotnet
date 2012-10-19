@@ -106,14 +106,14 @@ namespace Grikly
             }, wr);
         }
 
-        public void Execute<T>(string path, string method, Action<IResponseResult<T>> callback) where T : class 
+        public void Execute<T>(string path, string method, Action<IResponseResult<T>> callback) where T : class
         {
             Execute(path, method, result =>
                                       {
                                           //deserialize
                                           string data = Encoding.UTF8.GetString(result.RawBytes, 0, result.RawBytes.Length);
                                           var objData = JsonConvert.DeserializeObject<T>(data);
-                                          IResponseResult<T> res = result as IResponseResult<T>;
+                                          IResponseResult<T> res = new ResponseResult<T>(result);
                                           res.Data = objData;
                                           callback(res);
                                       });

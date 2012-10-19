@@ -14,6 +14,19 @@ namespace Grikly
     }
     public class ResponseResult<T> : IResponseResult<T> where T : class
     {
+        public ResponseResult()
+        {
+            
+        }
+        public ResponseResult(IResponseResult responseResult)
+        {
+            IsError = responseResult.IsError;
+            Error = responseResult.Error;
+            ContentType = responseResult.ContentType;
+            RawBytes = responseResult.RawBytes;
+            ContentLength = responseResult.ContentLength;
+        }
+
         #region Implementation of IResponseResult
 
         public T Data { get; set; }
