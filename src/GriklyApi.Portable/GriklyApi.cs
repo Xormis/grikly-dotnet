@@ -33,90 +33,124 @@ namespace Grikly
 
         }
         
-        public void Execute(string path, string method, Action<IResponseResult> callback)
+        public void Execute(IHttpRequest request, string path, Action<IHttpResponse> callback)
         {
             //build up the uri
             UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL);
             uriBuilder.Path += path;
-
+            
             var wr = HttpWebRequest.Create(uriBuilder.Uri);
             wr.Headers["UserId"] = UserId.ToString();
             wr.Headers["Password"] = Password;
-            wr.Method = method;
-
-            wr.BeginGetResponse(delegate(IAsyncResult ar)
+            foreach (var header in request.Headers)
             {
-                try
-                {
-                    //A WebException would be thrown here if status code isn't good
-                    var resp = wr.EndGetResponse(ar);
+                wr.Headers[header.Key] = header.Value;
+            }
+            wr.Method = request.Method;
+            //make the request with a content-body attached if method other than GET
+            if (wr.Method != "GET")
+            {
+                wr.ContentType = request.ContentType;
+                //write the input data (aka post) to a byte array
+                byte[] requestBytes = Encoding.UTF8.GetBytes(request.Body);
+                
+                //get the request stream to write the post to
+                wr.BeginGetRequestStream(delegate(IAsyncResult reqStreamAR)
+                                             {
 
-                    using (Stream stream = resp.GetResponseStream())
-                    {
-                        //memory stream needed because we need to convert the stream to a byte array
-                        var memoryStream = new MemoryStream();
-                        stream.CopyTo(memoryStream);
+                                                 //write the post to the request stream
+                                                 var requestStream = wr.EndGetRequestStream(reqStreamAR);
+                                                 requestStream.Write(requestBytes, 0, requestBytes.Length);
 
+                                                 ExecuteRequest(callback, wr);
+                                             }, wr);
+            }
+            else
+            {
+                ExecuteRequest(callback, wr);
+            }
 
-                        callback(new ResponseResult
-                        {
-                            IsError = false,
-                            RawBytes = memoryStream.ToArray(),
-                            ContentLength = resp.ContentLength,
-                            ContentType = resp.ContentType
-                        });
-                    }
-                }
-                catch (WebException webException)
-                {
-                    //Catch the exeption here and return properly formatted model.
-                    using (WebResponse response = webException.Response)
-                    {
-                        HttpWebResponse httpResponse = (HttpWebResponse)response;
-
-                        using (Stream data = response.GetResponseStream())
-                        {
-                            string body = new StreamReader(data).ReadToEnd();
-
-                            //try to deserialize the message
-                            ErrorMessage errorMessage = null;
-                            try
-                            {
-                                errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(body);
-                            }
-                            catch (Exception)
-                            {
-
-                            }
-
-                            var errorResponse = new ErrorResponse
-                            {
-                                HttpStatusCode = httpResponse.StatusCode,
-                                Message = errorMessage
-                            };
-
-                            callback(new ResponseResult
-                            {
-                                IsError = true,
-                                Error = errorResponse,
-                            });
-                        }
-                    }
-                }
-            }, wr);
         }
 
-        public void Execute<T>(string path, string method, Action<IResponseResult<T>> callback) where T : class
+        private void ExecuteRequest(Action<IHttpResponse> callback, WebRequest wr)
         {
-            Execute(path, method, result =>
-                                      {
-                                          //deserialize
-                                          string data = Encoding.UTF8.GetString(result.RawBytes, 0, result.RawBytes.Length);
-                                          var objData = JsonConvert.DeserializeObject<T>(data);
-                                          IResponseResult<T> res = new ResponseResult<T>(result);
-                                          res.Data = objData;
-                                          callback(res);
-                                      });
+            wr.BeginGetResponse(delegate(IAsyncResult ar)
+                                    {
+                                        try
+                                        {
+                                            //A WebException would be thrown here if status code isn't good
+                                            var resp = wr.EndGetResponse(ar);
+
+                                            using (Stream stream = resp.GetResponseStream())
+                                            {
+                                                //memory stream needed because we need to convert the stream to a byte array
+                                                var memoryStream = new MemoryStream();
+                                                stream.CopyTo(memoryStream);
+
+
+                                                callback(new HttpResponse
+                                                             {
+                                                                 IsError = false,
+                                                                 RawBytes = memoryStream.ToArray(),
+                                                                 ContentLength = resp.ContentLength,
+                                                                 ContentType = resp.ContentType
+                                                             });
+                                            }
+                                        }
+                                        catch (WebException webException)
+                                        {
+                                            //Catch the exeption here and return properly formatted model.
+                                            using (WebResponse response = webException.Response)
+                                            {
+                                                HttpWebResponse httpResponse = (HttpWebResponse) response;
+
+                                                using (Stream data = response.GetResponseStream())
+                                                {
+                                                    string body = new StreamReader(data).ReadToEnd();
+
+                                                    //try to deserialize the message
+                                                    ErrorMessage errorMessage = null;
+                                                    try
+                                                    {
+                                                        errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(body);
+                                                    }
+                                                    catch (Exception)
+                                                    {
+                                                    }
+
+                                                    var errorResponse = new ErrorResponse
+                                                                            {
+                                                                                HttpStatusCode = httpResponse.StatusCode,
+                                                                                Message = errorMessage
+                                                                            };
+
+                                                    callback(new HttpResponse
+                                                                 {
+                                                                     IsError = true,
+                                                                     Error = errorResponse,
+                                                                 });
+                                                }
+                                            }
+                                        }
+                                    }, wr);
+        }
+
+        public void Execute<T>(IHttpRequest request, string path, Action<IHttpResponse<T>> callback) where T : class
+        {
+            Execute(request, path, result =>
+                                       {
+                                           IHttpResponse<T> res = new HttpResponse<T>(result);
+                                           //if error, there will be nothing to deserialize
+                                           if (!result.IsError)
+                                           {
+                                               //deserialize
+                                               string data = Encoding.UTF8.GetString(result.RawBytes, 0,
+                                                                                     result.RawBytes.Length);
+                                               var objData = JsonConvert.DeserializeObject<T>(data);
+                                               res.Data = objData;
+                                           }
+                                           callback(res);
+                                       });
         }
     }
 }

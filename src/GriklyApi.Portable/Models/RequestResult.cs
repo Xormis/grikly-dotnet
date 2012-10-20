@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace Grikly
 {
-    public class ResponseResult : IResponseResult
+    public class HttpResponse : IHttpResponse
     {
         #region Implementation of IResponseResult
 
@@ -12,13 +14,13 @@ namespace Grikly
 
         #endregion
     }
-    public class ResponseResult<T> : IResponseResult<T> where T : class
+    public class HttpResponse<T> : IHttpResponse<T> where T : class
     {
-        public ResponseResult()
+        public HttpResponse()
         {
             
         }
-        public ResponseResult(IResponseResult responseResult)
+        public HttpResponse(IHttpResponse responseResult)
         {
             IsError = responseResult.IsError;
             Error = responseResult.Error;
@@ -39,7 +41,7 @@ namespace Grikly
         #endregion
     }
 
-    public interface IResponseResult
+    public interface IHttpResponse
     {
         bool IsError { get; set; }
         ErrorResponse Error { get; set; }
@@ -51,8 +53,33 @@ namespace Grikly
         long ContentLength { get; set; }
     }
 
-    public interface IResponseResult<T> : IResponseResult
+    public interface IHttpResponse<T> : IHttpResponse
     {
         T Data { get; set; }
+    }
+
+    public class HttpRequest : IHttpRequest
+    {
+        public HttpRequest()
+        {
+            Headers = new Dictionary<string, string>();
+            Method = "GET";
+            Body = string.Empty;
+        }
+
+        public string Url { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
+        public string Body { get; set; }
+        public string Method { get; set; }
+        public string ContentType { get; set; }
+    }
+
+    public interface IHttpRequest
+    {
+        string Url { get; set; }
+        Dictionary<string, string> Headers { get; set; }
+        string Body { get; set; }
+        string Method { get; set; }
+        string ContentType { get; set; }
     }
 }

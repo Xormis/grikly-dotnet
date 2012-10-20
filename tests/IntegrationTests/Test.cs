@@ -10,11 +10,6 @@ using Grikly.Models;
 
 namespace Grikly.Tests.IntegrationTests
 {
-    public class lol
-    {
-        public string test { get; set; }
-        public string test1 { get; set; }
-    }
     [TestFixture]
     public class Test
     {
@@ -26,10 +21,28 @@ namespace Grikly.Tests.IntegrationTests
 
             var completion = new ManualResetEvent(false);
 
-            api.Execute<Card>("Cards/1/", "GET", (result) =>
+            api.Execute(new HttpRequest
+                            {
+                                Body = "LOL",
+                                Method = "POST"
+                            }, "Cards", (result) =>
                                                   {
                                                       completion.Set();
                                                   });
+            completion.WaitOne();
+        }
+
+        [Test]
+        public void GET_User_By_Id_Returns_Model()
+        {
+            GriklyApi api = new GriklyApi("");
+
+            var completion = new ManualResetEvent(false);
+
+            api.GetUser(1, (result) =>
+            {
+                completion.Set();
+            });
             completion.WaitOne();
         }
     }
