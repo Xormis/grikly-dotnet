@@ -40,8 +40,9 @@ namespace Grikly
             uriBuilder.Path += path;
             
             var wr = HttpWebRequest.Create(uriBuilder.Uri);
-            wr.Headers["UserId"] = UserId.ToString();
-            wr.Headers["Password"] = Password;
+            string authInfo = UserId + ":" + Password;
+            authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
+            wr.Headers["Authorization"] = "Basic " + authInfo;
             foreach (var header in request.Headers)
             {
                 wr.Headers[header.Key] = header.Value;
