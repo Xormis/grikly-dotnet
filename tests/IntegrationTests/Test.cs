@@ -38,8 +38,14 @@ namespace Grikly.Tests.IntegrationTests
             GriklyApi api = new GriklyApi("");
 
             var completion = new ManualResetEvent(false);
-
-            api.GetUser(1, (result) =>
+            api.AddValidUserCredentials(2, "dfd");
+            api.CreateCard(new Card
+                               {
+                                   FirstName = "Shawn",
+                                   LastName = "Mclean",
+                                   CellNumber = "12345",
+                                   Company = "NCU"
+                               }, (result) =>
             {
                 completion.Set();
             });
