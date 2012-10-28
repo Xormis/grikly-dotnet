@@ -26,14 +26,25 @@ namespace Grikly
                         }, path, callback );
         }
 
-        public Card UpdateCard(Card card)
+        public void UpdateCard(Card card, Action<IHttpResponse<Card>> callback)
         {
-            throw new NotImplementedException();
+            string path = string.Format("Cards/{0}", card.CardId);
+            Execute(new HttpRequest
+            {
+                Body = JsonConvert.SerializeObject(card),
+                Method = "PUT",
+                ContentType = "application/json"
+            }, path, callback);
         }
 
-        public Card DeleteCard(int cardId)
+        public void DeleteCard(int id, Action<IHttpResponse<Card>> callback)
         {
-            throw new NotImplementedException();
+            string path = string.Format("Cards/{0}", id);
+            Execute(new HttpRequest
+            {
+                Method = "DELETE",
+                ContentType = "application/json"
+            }, path, callback);
         }
     }
 }
