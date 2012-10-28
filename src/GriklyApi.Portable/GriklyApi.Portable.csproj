@@ -36,6 +36,7 @@
     <Compile Include="Accounts.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Contacts.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="GriklyApi.cs" />
