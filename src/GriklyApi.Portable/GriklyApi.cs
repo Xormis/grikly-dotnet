@@ -36,8 +36,8 @@ namespace Grikly
         public void Execute(IHttpRequest request, string path, Action<IHttpResponse> callback)
         {
             //build up the uri
-            UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL);
-            uriBuilder.Path += path;
+            UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL+path);
+            //uriBuilder.Path += path;
             
             var wr = HttpWebRequest.Create(uriBuilder.Uri);
             string authInfo = UserId + ":" + Password;
@@ -136,7 +136,7 @@ namespace Grikly
                                     }, wr);
         }
 
-        public void Execute<T>(IHttpRequest request, string path, Action<IHttpResponse<T>> callback) where T : class
+        public void Execute<T>(IHttpRequest request, string path, Action<IHttpResponse<T>> callback)
         {
             Execute(request, path, result =>
                                        {

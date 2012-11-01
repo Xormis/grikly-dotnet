@@ -14,7 +14,7 @@ namespace Grikly
 
         #endregion
     }
-    public class HttpResponse<T> : IHttpResponse<T> where T : class
+    public class HttpResponse<T> : IHttpResponse<T>
     {
         public HttpResponse()
         {

@@ -1,5 +1,6 @@
 ﻿using Grikly.Models;
 using System;
+using Newtonsoft.Json;
 
 namespace Grikly
 {
@@ -8,23 +9,38 @@ namespace Grikly
         /// <summary>
         /// Get a valid User by email and password
         /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <para name="login"></para>
         /// <returns></returns>
-        public User GetValidUser(string email, string password)
+        public void GetValidUser(LoginModel login, Action<IHttpResponse<User>> callback)
         {
-            throw new NotImplementedException();
+            string path = "Account/Login";
+            Execute(new HttpRequest
+            {
+                Body = JsonConvert.SerializeObject(login),
+                Method = "POST",
+                ContentType = "application/json"
+            }, path, callback);
         }
 
-        /// <summary>
-        /// Get a valid user by userId and password
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public User GetValidUser(int userId, string password)
+
+        public void Register(RegisterModel register, Action<IHttpResponse<User>> callback)
         {
-            throw new NotImplementedException();
+            string path = "Account/Register";
+            Execute(new HttpRequest
+            {
+                Method = "POST",
+                Body = JsonConvert.SerializeObject(register),
+                ContentType = "application/json"
+            }, path, callback);
+        }
+
+        public void EmailExist(string email, Action<IHttpResponse<bool>> callback)
+        {
+            string path = string.Format("Account/EmailExist?Email={0}", email);
+            Execute(new HttpRequest
+            {
+                Method = "GET"
+            }, path, callback);
         }
     }
 }
