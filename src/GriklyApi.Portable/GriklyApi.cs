@@ -9,6 +9,7 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
+        private bool credentialsUsed = false;
         public string ApiKey { get; private set; }
 
         //intention is to remove usernames and password requirements in version 2 (using OAUTH)
@@ -30,110 +31,158 @@ namespace Grikly
         {
             UserId = userId;
             Password = password;
-
+            credentialsUsed = true;
         }
         
         public void Execute(IHttpRequest request, string path, Action<IHttpResponse> callback)
         {
             //build up the uri
             UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL+path);
-            //uriBuilder.Path += path;
+            var wr = (HttpWebRequest)HttpWebRequest.Create(uriBuilder.Uri);
+
+            //transfer details from request to wr
+            wr.ContentType = request.ContentType;
+            wr.Method = request.Method;
+            if(credentialsUsed)
+            {
+                string authInfo = UserId + ":" + Password;
+                authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
+                wr.Headers["Authorization"] = "Basic " + authInfo;
+            }
             
-            var wr = HttpWebRequest.Create(uriBuilder.Uri);
-            string authInfo = UserId + ":" + Password;
-            authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
-            wr.Headers["Authorization"] = "Basic " + authInfo;
             foreach (var header in request.Headers)
             {
                 wr.Headers[header.Key] = header.Value;
             }
-            wr.Method = request.Method;
-            //make the request with a content-body attached if method other than GET
-            if (wr.Method != "GET")
+
+            if(wr.Method != "GET")
             {
-                wr.ContentType = request.ContentType;
-                //write the input data (aka post) to a byte array
-                byte[] requestBytes = Encoding.UTF8.GetBytes(request.Body);
-                
-                //get the request stream to write the post to
-                wr.BeginGetRequestStream(delegate(IAsyncResult reqStreamAR)
-                                             {
-
-                                                 //write the post to the request stream
-                                                 var requestStream = wr.EndGetRequestStream(reqStreamAR);
-                                                 requestStream.Write(requestBytes, 0, requestBytes.Length);
-
-                                                 ExecuteRequest(callback, wr);
-                                             }, wr);
+                wr.BeginGetRequestStream(new AsyncCallback(ExecutePost), new HttpWebRequestData
+                                                                             {
+                                                                                 Data = request.Body,
+                                                                                 Request = wr,
+                                                                                 ResponseCallback = callback
+                                                                             });
             }
             else
             {
-                ExecuteRequest(callback, wr);
+                ExecuteGet(wr, callback);
+            }
+        }
+
+        public void ExecutePost(IAsyncResult asyncResult)
+        {
+            HttpWebRequestData requestData = asyncResult.AsyncState as HttpWebRequestData;
+            HttpWebRequest request = requestData.Request;
+
+            byte[] data = UTF8Encoding.UTF8.GetBytes(requestData.Data);
+            using(Stream requestStream = request.EndGetRequestStream(asyncResult))
+            {
+                requestStream.Write(data, 0, data.Length);
+                requestStream.Flush();
+                //requestStream;
+            }
+
+            request.BeginGetResponse(new AsyncCallback(ExecutePostResponseCallback), requestData);
+
+        }
+
+        private void ExecutePostResponseCallback(IAsyncResult ar)
+        {
+
+            //Ignoring error handling here to keep things simple
+            HttpWebRequestData requestData = ar.AsyncState as HttpWebRequestData;
+            try
+            {
+                HttpWebResponse response = requestData.Request.EndGetResponse(ar) as HttpWebResponse;
+                Stream responseStream = response.GetResponseStream();
+                //memory stream needed because we need to convert the stream to a byte array
+                var memoryStream = new MemoryStream();
+                responseStream.CopyTo(memoryStream);
+
+
+                requestData.ResponseCallback(new HttpResponse
+                                                 {
+                                                     IsError = false,
+                                                     RawBytes = memoryStream.ToArray(),
+                                                     ContentLength = response.ContentLength,
+                                                     ContentType = response.ContentType
+                                                 });
+            }catch(WebException wex)
+            {
+                HandleRequestError(requestData.ResponseCallback, wex);
             }
 
         }
 
-        private void ExecuteRequest(Action<IHttpResponse> callback, WebRequest wr)
+        private void ExecuteGet(WebRequest wr, Action<IHttpResponse> callback)
         {
             wr.BeginGetResponse(delegate(IAsyncResult ar)
                                     {
                                         try
                                         {
                                             //A WebException would be thrown here if status code isn't good
-                                            var resp = wr.EndGetResponse(ar);
-
-                                            using (Stream stream = resp.GetResponseStream())
+                                            using (var resp = wr.EndGetResponse(ar))
                                             {
-                                                //memory stream needed because we need to convert the stream to a byte array
-                                                var memoryStream = new MemoryStream();
-                                                stream.CopyTo(memoryStream);
+
+                                                using (Stream stream = resp.GetResponseStream())
+                                                {
+                                                    //memory stream needed because we need to convert the stream to a byte array
+                                                    var memoryStream = new MemoryStream();
+                                                    stream.CopyTo(memoryStream);
 
 
-                                                callback(new HttpResponse
-                                                             {
-                                                                 IsError = false,
-                                                                 RawBytes = memoryStream.ToArray(),
-                                                                 ContentLength = resp.ContentLength,
-                                                                 ContentType = resp.ContentType
-                                                             });
+                                                    callback(new HttpResponse
+                                                                 {
+                                                                     IsError = false,
+                                                                     RawBytes = memoryStream.ToArray(),
+                                                                     ContentLength = resp.ContentLength,
+                                                                     ContentType = resp.ContentType
+                                                                 });
+                                                }
                                             }
                                         }
                                         catch (WebException webException)
                                         {
                                             //Catch the exeption here and return properly formatted model.
-                                            using (WebResponse response = webException.Response)
-                                            {
-                                                HttpWebResponse httpResponse = (HttpWebResponse) response;
-
-                                                using (Stream data = response.GetResponseStream())
-                                                {
-                                                    string body = new StreamReader(data).ReadToEnd();
-
-                                                    //try to deserialize the message
-                                                    ErrorMessage errorMessage = null;
-                                                    try
-                                                    {
-                                                        errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(body);
-                                                    }
-                                                    catch (Exception)
-                                                    {
-                                                    }
-
-                                                    var errorResponse = new ErrorResponse
-                                                                            {
-                                                                                HttpStatusCode = httpResponse.StatusCode,
-                                                                                Message = errorMessage
-                                                                            };
-
-                                                    callback(new HttpResponse
-                                                                 {
-                                                                     IsError = true,
-                                                                     Error = errorResponse,
-                                                                 });
-                                                }
-                                            }
+                                            HandleRequestError(callback, webException);
                                         }
                                     }, wr);
+        }
+
+        private void HandleRequestError(Action<IHttpResponse> callback, WebException webException)
+        {
+            using (WebResponse response = webException.Response)
+            {
+                HttpWebResponse httpResponse = (HttpWebResponse) response;
+
+                using (Stream data = response.GetResponseStream())
+                {
+                    string body = new StreamReader(data).ReadToEnd();
+
+                    //try to deserialize the message
+                    ErrorMessage errorMessage = null;
+                    try
+                    {
+                        errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(body);
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                    var errorResponse = new ErrorResponse
+                                            {
+                                                HttpStatusCode = httpResponse.StatusCode,
+                                                Message = errorMessage
+                                            };
+
+                    callback(new HttpResponse
+                                 {
+                                     IsError = true,
+                                     Error = errorResponse,
+                                 });
+                }
+            }
         }
 
         public void Execute<T>(IHttpRequest request, string path, Action<IHttpResponse<T>> callback)
