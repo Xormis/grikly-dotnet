@@ -190,14 +190,29 @@ namespace Grikly
             Execute(request, path, result =>
                                        {
                                            IHttpResponse<T> res = new HttpResponse<T>(result);
-                                           //if error, there will be nothing to deserialize
-                                           if (!result.IsError)
+                                           try
                                            {
-                                               //deserialize
-                                               string data = Encoding.UTF8.GetString(result.RawBytes, 0,
-                                                                                     result.RawBytes.Length);
-                                               var objData = JsonConvert.DeserializeObject<T>(data);
-                                               res.Data = objData;
+                                               //if error, there will be nothing to deserialize
+                                               if (!result.IsError)
+                                               {
+                                                   //deserialize
+                                                   string data = Encoding.UTF8.GetString(result.RawBytes, 0,
+                                                                                         result.RawBytes.Length);
+                                                   var objData = JsonConvert.DeserializeObject<T>(data);
+                                                   res.Data = objData;
+
+                                               }
+                                           }
+                                           catch (Exception ex)
+                                           {
+                                               res.IsError = true;
+                                               res.Error = new ErrorResponse
+                                                               {
+                                                                   Message = new ErrorMessage
+                                                                                 {
+                                                                                     Message = ex.Message
+                                                                                 }
+                                                               };
                                            }
                                            callback(res);
                                        });
