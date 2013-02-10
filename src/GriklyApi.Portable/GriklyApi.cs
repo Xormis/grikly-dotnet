@@ -203,16 +203,29 @@ namespace Grikly
 
                                                }
                                            }
-                                           catch (Exception ex)
+                                           catch (FormatException fex)
                                            {
                                                res.IsError = true;
                                                res.Error = new ErrorResponse
                                                                {
                                                                    Message = new ErrorMessage
                                                                                  {
-                                                                                     Message = ex.Message
+                                                                                     Message = "Error with Server",
+                                                                                     ExceptionMessage = fex.Message
                                                                                  }
                                                                };
+                                           }
+                                           catch (Exception ex)
+                                           {
+                                               res.IsError = true;
+                                               res.Error = new ErrorResponse
+                                               {
+                                                   Message = new ErrorMessage
+                                                   {
+                                                       Message = "Internal Exception Occured",
+                                                       ExceptionMessage = ex.Message
+                                                   }
+                                               };
                                            }
                                            callback(res);
                                        });
