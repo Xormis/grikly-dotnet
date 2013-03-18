@@ -18,7 +18,13 @@
 
         public string Title { get; set; }
 
-        public string Company { get; set; }
+        public string CompanyName { get; set; }
+        
+        public string CompanyAddress { get; set; }
+        public double CompanyLatitude { get; set; }
+        public double CompanyLongitude { get; set; }
+        public string CompanyFax { get; set; }
+        public string CompanyPhone { get; set; }
 
         public string LogoUrl { get; set; }
 
