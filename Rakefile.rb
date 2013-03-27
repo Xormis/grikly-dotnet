@@ -2,7 +2,7 @@ include Rake::DSL
 require 'albacore'
 require 'version_bumper'
 
-GRIKLY_CORE_DIR = 'src/GriklyApi.Portable/bin/release/GriklyApi.Portable.dll'
+GRIKLY_CORE_DIR = 'src/GriklyApi.Portable/bin/release/GriklyApi.dll'
 
 task :deploy,[:build] => [:zip, :nuget_push] do
 end
@@ -17,7 +17,7 @@ end
 output :output => :test do |out|
 	out.from '.'
 	out.to 'out'
-	out.file GRIKLY_CORE_DIR, :as=>'GriklyApi.Portable.dll'
+	out.file GRIKLY_CORE_DIR, :as=>'GriklyApi.dll'
 	out.file 'LICENSE.txt'
 	out.file 'README.md'
 	out.file 'VERSION'
@@ -68,7 +68,7 @@ nuspec :nus => :output do |nuspec|
    nuspec.projectUrl = "https://github.com/Xormis/grikly-dotnet"
    nuspec.working_directory = "out/"
    nuspec.output_file = "Grikly.nuspec"
-   nuspec.file "GriklyApi.Portable.dll", "lib"
+   nuspec.file "GriklyApi.dll", "lib"
 end
 
 
