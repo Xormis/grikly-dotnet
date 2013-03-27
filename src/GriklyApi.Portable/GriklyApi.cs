@@ -13,7 +13,7 @@ namespace Grikly
         public string ApiKey { get; private set; }
 
         //intention is to remove usernames and password requirements in version 2 (using OAUTH)
-        public int UserId { get; private set; }
+        public string Email { get; private set; }
 
         public string Password { get; private set; }
 
@@ -27,9 +27,9 @@ namespace Grikly
 
         }
 
-        public void AddValidUserCredentials(int userId, string password)
+        public void AddValidUserCredentials(string email, string password)
         {
-            UserId = userId;
+            Email = email;
             Password = password;
             credentialsUsed = true;
         }
@@ -45,7 +45,7 @@ namespace Grikly
             wr.Method = request.Method;
             if(credentialsUsed)
             {
-                string authInfo = UserId + ":" + Password;
+                string authInfo = Email + ":" + Password;
                 authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
                 wr.Headers["Authorization"] = "Basic " + authInfo;
             }
