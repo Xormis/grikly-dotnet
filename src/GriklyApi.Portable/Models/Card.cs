@@ -1,14 +1,61 @@
-﻿namespace Grikly.Models
+﻿using System.ComponentModel;
+using Grikly.Annotations;
+
+namespace Grikly.Models
 {
-    public class Card
+    public class Card : INotifyPropertyChanged
     {
-        public int CardId { get; set; }
+        private int cardId;
 
-        public int UserId { get; set; }
+        public int CardId
+        {
+            get { return cardId; }
+            set
+            {
+                bool changed = value != cardId;
+                cardId = value;
+                if (changed) OnPropertyChanged("CardId");
+            }
+        }
 
-        public string FirstName { get; set; }
+        private int userId;
 
-        public string LastName { get; set; }
+        public int UserId
+        {
+            get { return userId; }
+            set
+            {
+                bool changed = value != userId;
+                userId = value;
+                if (changed) OnPropertyChanged("UserId");
+            }
+        }
+
+        private string firstName;
+
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                bool changed = value != firstName;
+                firstName = value;
+                if (changed) OnPropertyChanged("FirstName");
+            }
+        }
+
+        private string lastName;
+
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                bool changed = value != lastName;
+                lastName = value;
+                if (changed) OnPropertyChanged("LastName");
+            }
+        }
 
         public string WorkNumber { get; set; }
 
@@ -17,8 +64,18 @@
         public string Email { get; set; }
 
         public string Title { get; set; }
+        private string companyName;
 
-        public string CompanyName { get; set; }
+        public string CompanyName
+        {
+            get { return companyName; }
+            set
+            {
+                bool changed = value != companyName;
+                companyName = value;
+                if (changed) OnPropertyChanged("CompanyName");
+            }
+        }
         
         public string CompanyAddress { get; set; }
         public double CompanyLatitude { get; set; }
@@ -42,6 +99,13 @@
 
         public Contact Contact { get; set; }
 
-        public bool IsPrivate { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

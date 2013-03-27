@@ -8,8 +8,8 @@
     <ProjectGuid>{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GriklyApi.Portable</RootNamespace>
-    <AssemblyName>GriklyApi.Portable</AssemblyName>
+    <RootNamespace>GriklyApi</RootNamespace>
+    <AssemblyName>GriklyApi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile104</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -45,6 +45,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RequestResult.cs" />
     <Compile Include="Users.cs" />
