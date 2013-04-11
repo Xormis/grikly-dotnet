@@ -11,7 +11,7 @@ namespace Grikly.Models
         public string Email { get; set; }
 
         public int ContactsCount { get; set; }
-
+        public string ProfileImageUrl { get; set; }
         public int CardsCount { get; set; }
 
         public Card DefaultCard { get; set; }

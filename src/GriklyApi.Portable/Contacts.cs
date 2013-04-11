@@ -10,7 +10,7 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public void GetContacts(string searchText, int page, Action<IHttpResponse<Card>> callback)
+        public void GetContacts(string searchText, int page, Action<IHttpResponse<IList<Card>>> callback)
         {
             string path = string.Format("Contacts?searchText={0}&page={1}", searchText, page);
             Execute(new HttpRequest

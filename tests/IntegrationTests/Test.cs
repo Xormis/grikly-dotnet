@@ -67,41 +67,41 @@ namespace Grikly.Tests.IntegrationTests
         //    completion.WaitOne();
         //}
 
-        //[Test]
-        //public void Login()
-        //{
-        //    GriklyApi api = new GriklyApi("");
+        [Test]
+        public void Login()
+        {
+            GriklyApi api = new GriklyApi("");
 
-        //    var completion = new ManualResetEvent(false);
-        //    api.GetValidUser(new LoginModel
-        //                         {
-        //                             Email = "shawn@xormis.com",
-        //                             Password = "test"
-        //                         }, (result) =>
-        //    {
-        //        completion.Set();
-        //    });
-        //    completion.WaitOne();
-        //}
+            var completion = new ManualResetEvent(false);
+            api.GetValidUser(new LoginModel
+                                 {
+                                     Email = "shawn@xormis.com",
+                                     Password = "testuser"
+                                 }, (result) =>
+            {
+                completion.Set();
+            });
+            completion.WaitOne();
+        }
 
-        //[Test]
-        //public void Register()
-        //{
-        //    GriklyApi api = new GriklyApi("");
+        [Test]
+        public void Register()
+        {
+            GriklyApi api = new GriklyApi("");
 
-        //    var completion = new ManualResetEvent(false);
-        //    api.Register(new RegisterModel
-        //                     {
-        //                         Email = "shawn@xormis.com",
-        //                         FirstName = "Shawn",
-        //                         LastName = "Mclean",
-        //                         Password = "test"
-        //                     }, (result) =>
-        //    {
-        //        completion.Set();
-        //    });
-        //    completion.WaitOne();
-        //}
+            var completion = new ManualResetEvent(false);
+            api.Register(new RegisterModel
+                             {
+                                 Email = "shawn@xormis.com",
+                                 FirstName = "Shawn",
+                                 LastName = "Mclean",
+                                 Password = "test"
+                             }, (result) =>
+            {
+                completion.Set();
+            });
+            completion.WaitOne();
+        }
 
         //[Test]
         //public void EmailExist()
@@ -115,5 +115,38 @@ namespace Grikly.Tests.IntegrationTests
         //    });
         //    completion.WaitOne();
         //}
+
+        [Test]
+        public void CreateCard()
+        {
+            GriklyApi api = new GriklyApi("");
+            api.AddValidUserCredentials("","testuser");
+            var completion = new ManualResetEvent(false);
+            api.CreateCard(new Card
+            {
+                Email = "shawn@xormis.com",
+                FirstName = "Shawn",
+                LastName = "Mclean",
+                CompanyAddress = "Appleton"
+            }, (result) =>
+            {
+                completion.Set();
+            });
+            completion.WaitOne();
+        }
+
+        [Test]
+        public void CetContacts()
+        {
+            GriklyApi api = new GriklyApi("");
+            api.AddValidUserCredentials("shawn@xormis.com", "testuser");
+            var completion = new ManualResetEvent(false);
+            api.GetContacts("", 1, response =>
+                                       {
+                                           var l = response.Data;
+                                           completion.Set();
+                                       });
+            completion.WaitOne();
+        }
     }
 }
