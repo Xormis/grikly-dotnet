@@ -6,7 +6,6 @@ namespace Grikly.Models
     public class Card
     {
         public int CardId { get; set; }
-
         public int UserId { get; set; }
 
         public string FirstName { get; set; }
