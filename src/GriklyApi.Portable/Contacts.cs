@@ -24,7 +24,7 @@ namespace Grikly
             string path = "Contacts";
             Execute(new HttpRequest
             {
-                Body = JsonConvert.SerializeObject(contact),
+                Body =  Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(contact)),
                 Method = "POST",
                 ContentType = "application/json"
             }, path, callback);
@@ -35,7 +35,7 @@ namespace Grikly
             string path = string.Format("Contacts/{0}", contact.CardId);
             Execute(new HttpRequest
             {
-                Body = JsonConvert.SerializeObject(contact),
+                Body = Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(contact)),
                 Method = "PUT",
                 ContentType = "application/json"
             }, path, callback);

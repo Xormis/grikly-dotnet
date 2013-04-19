@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -66,6 +67,23 @@ namespace Grikly.Tests.IntegrationTests
         //    });
         //    completion.WaitOne();
         //}
+
+        [Test]
+        public void UploadImage()
+        {
+            GriklyApi api = new GriklyApi("");
+            api.AddValidUserCredentials("shawn@xormis.com", "testuser");
+
+            var completion = new ManualResetEvent(false);
+
+            var stream = File.ReadAllBytes("D:/chair.jpe");
+
+            api.UploadProfileImage(1, stream, "image/jpeg", (result) =>
+            {
+                completion.Set();
+            });
+            completion.WaitOne();
+        }
 
         [Test]
         public void Login()

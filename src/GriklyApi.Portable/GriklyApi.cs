@@ -54,7 +54,7 @@ namespace Grikly
             {
                 wr.Headers[header.Key] = header.Value;
             }
-
+            
             if(wr.Method != "GET")
             {
                 wr.BeginGetRequestStream(new AsyncCallback(ExecutePost), new HttpWebRequestData
@@ -75,10 +75,9 @@ namespace Grikly
             HttpWebRequestData requestData = asyncResult.AsyncState as HttpWebRequestData;
             HttpWebRequest request = requestData.Request;
 
-            byte[] data = UTF8Encoding.UTF8.GetBytes(requestData.Data);
             using(Stream requestStream = request.EndGetRequestStream(asyncResult))
             {
-                requestStream.Write(data, 0, data.Length);
+                requestStream.Write(requestData.Data, 0, requestData.Data.Length);
                 requestStream.Flush();
                 //requestStream;
             }

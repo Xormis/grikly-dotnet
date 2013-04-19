@@ -17,7 +17,7 @@ namespace Grikly
     {
         public HttpWebRequest Request { get; set; }
         public Action<IHttpResponse> ResponseCallback { get; set; }
-        public string Data { get; set; }
+        public byte[] Data { get; set; }
     }
 
     public class ExceptionEventArgs : EventArgs

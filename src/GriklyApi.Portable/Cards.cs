@@ -1,4 +1,5 @@
-﻿using Grikly.Models;
+﻿using System.Text;
+using Grikly.Models;
 using System;
 using Newtonsoft.Json;
 
@@ -20,7 +21,7 @@ namespace Grikly
             string path = "Cards";
             Execute(new HttpRequest
                         {
-                            Body = JsonConvert.SerializeObject(card),
+                            Body = Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(card)),
                             Method = "POST",
                             ContentType = "application/json"
                         }, path, callback );
@@ -31,7 +32,7 @@ namespace Grikly
             string path = string.Format("Cards/{0}", card.CardId);
             Execute(new HttpRequest
             {
-                Body = JsonConvert.SerializeObject(card),
+                Body = Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(card)),
                 Method = "PUT",
                 ContentType = "application/json"
             }, path, callback);

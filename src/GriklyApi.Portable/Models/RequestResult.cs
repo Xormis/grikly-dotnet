@@ -64,12 +64,11 @@ namespace Grikly
         {
             Headers = new Dictionary<string, string>();
             Method = "GET";
-            Body = string.Empty;
         }
 
         public string Url { get; set; }
         public Dictionary<string, string> Headers { get; set; }
-        public string Body { get; set; }
+        public byte[] Body { get; set; }
         public string Method { get; set; }
         public string ContentType { get; set; }
     }
@@ -78,7 +77,7 @@ namespace Grikly
     {
         string Url { get; set; }
         Dictionary<string, string> Headers { get; set; }
-        string Body { get; set; }
+        byte[] Body { get; set; }
         string Method { get; set; }
         string ContentType { get; set; }
     }
