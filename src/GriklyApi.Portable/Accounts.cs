@@ -17,7 +17,7 @@ namespace Grikly
             string path = "Account/Login";
             Execute(new HttpRequest
             {
-                Body = Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(login)),
+                Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(login)),
                 Method = "POST",
                 ContentType = "application/json"
             }, path, callback);
@@ -30,7 +30,7 @@ namespace Grikly
             Execute(new HttpRequest
             {
                 Method = "POST",
-                Body = Encoding.Unicode.GetBytes(JsonConvert.SerializeObject(register)),
+                Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(register)),
                 ContentType = "application/json"
             }, path, callback);
         }
