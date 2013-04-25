@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using Grikly.Models;
 using System;
 using Newtonsoft.Json;
@@ -12,36 +13,36 @@ namespace Grikly
         /// </summary>
         /// <para name="login"></para>
         /// <returns></returns>
-        public void GetValidUser(LoginModel login, Action<IHttpResponse<User>> callback)
+        public Task<IHttpResponse<User>> GetValidUser(LoginModel login)
         {
             string path = "Account/Login";
-            Execute(new HttpRequest
-            {
-                Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(login)),
-                Method = "POST",
-                ContentType = "application/json"
-            }, path, callback);
+            return Execute<User>(new HttpRequest
+                                     {
+                                         Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(login)),
+                                         Method = "POST",
+                                         ContentType = "application/json"
+                                     }, path);
         }
 
 
-        public void Register(RegisterModel register, Action<IHttpResponse<User>> callback)
+        public Task<IHttpResponse<User>> Register(RegisterModel register)
         {
             string path = "Account/Register";
-            Execute(new HttpRequest
+            return Execute<User>(new HttpRequest
             {
                 Method = "POST",
                 Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(register)),
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
 
-        public void EmailExist(string email, Action<IHttpResponse<bool>> callback)
+        public Task<IHttpResponse<bool>> EmailExist(string email)
         {
             string path = string.Format("Account/EmailExist?Email={0}", email);
-            Execute(new HttpRequest
+            return Execute<bool>(new HttpRequest
             {
                 Method = "GET"
-            }, path, callback);
+            }, path);
         }
     }
 }
