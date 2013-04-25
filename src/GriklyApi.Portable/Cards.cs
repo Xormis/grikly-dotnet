@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using Grikly.Models;
 using System;
 using Newtonsoft.Json;
@@ -7,45 +8,45 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public void GetCard(int id, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> GetCard(int id)
         {
             string path = string.Format("Cards/{0}", id);
-            Execute(new HttpRequest
-            {
-                Method = "GET"
-            }, path, callback);
+            return Execute<Card>(new HttpRequest
+                               {
+                                   Method = "GET"
+                               }, path);
         }
 
-        public void CreateCard(Card card, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> CreateCard(Card card)
         {
             string path = "Cards";
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
                         {
                             Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(card)),
                             Method = "POST",
                             ContentType = "application/json"
-                        }, path, callback );
+                        }, path );
         }
 
-        public void UpdateCard(Card card, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> UpdateCard(Card card)
         {
             string path = string.Format("Cards/{0}", card.CardId);
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
             {
                 Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(card)),
                 Method = "PUT",
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
 
-        public void DeleteCard(int id, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> DeleteCard(int id)
         {
             string path = string.Format("Cards/{0}", id);
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
             {
                 Method = "DELETE",
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
     }
 }
