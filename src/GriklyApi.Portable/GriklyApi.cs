@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Grikly.Models;
 using Newtonsoft.Json;
 
@@ -34,7 +35,7 @@ namespace Grikly
             credentialsUsed = true;
         }
         
-        public void Execute(IHttpRequest request, string path, Action<IHttpResponse> callback)
+        public Task<IHttpResponse> Execute(IHttpRequest request, string path)
         {
             //build up the uri
             UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL+path);
@@ -57,16 +58,28 @@ namespace Grikly
             
             if(wr.Method != "GET")
             {
-                wr.BeginGetRequestStream(new AsyncCallback(ExecutePost), new HttpWebRequestData
-                                                                             {
-                                                                                 Data = request.Body,
-                                                                                 Request = wr,
-                                                                                 ResponseCallback = callback
-                                                                             });
+                return Task.Factory.StartNew(() =>
+                {
+                    var t = new TaskCompletionSource<IHttpResponse>();
+                    wr.BeginGetRequestStream(new AsyncCallback(ExecutePost), new HttpWebRequestData
+                    {
+                        Data = request.Body,
+                        Request = wr,
+                        ResponseCallback = s => t.TrySetResult(s)
+                    });
+
+                    return t.Task;
+                }).Unwrap();
+                
             }
             else
             {
-                ExecuteGet(wr, callback);
+                return Task.Factory.StartNew(() =>
+                                                 {
+                                                     var t = new TaskCompletionSource<IHttpResponse>();
+                                                     ExecuteGet(wr, s=>t.TrySetResult(s));
+                                                     return t.Task;
+                                                 }).Unwrap();
             }
         }
 
@@ -184,50 +197,50 @@ namespace Grikly
             }
         }
 
-        public void Execute<T>(IHttpRequest request, string path, Action<IHttpResponse<T>> callback)
+        public Task<IHttpResponse<T>>  Execute<T>(IHttpRequest request, string path)
         {
-            Execute(request, path, result =>
-                                       {
-                                           IHttpResponse<T> res = new HttpResponse<T>(result);
-                                           try
-                                           {
-                                               //if error, there will be nothing to deserialize
-                                               if (!result.IsError)
-                                               {
-                                                   //deserialize
-                                                   string data = Encoding.UTF8.GetString(result.RawBytes, 0,
-                                                                                         result.RawBytes.Length);
-                                                   var objData = JsonConvert.DeserializeObject<T>(data);
-                                                   res.Data = objData;
+            return Execute(request, path).ContinueWith((result) =>
+                                                    {
+                                                        IHttpResponse<T> res = new HttpResponse<T>(result.Result);
+                                                        try
+                                                        {
+                                                            //if error, there will be nothing to deserialize
+                                                            if (!res.IsError)
+                                                            {
+                                                                //deserialize
+                                                                string data = Encoding.UTF8.GetString(res.RawBytes, 0,
+                                                                                                      res.RawBytes.Length);
+                                                                var objData = JsonConvert.DeserializeObject<T>(data);
+                                                                res.Data = objData;
 
-                                               }
-                                           }
-                                           catch (FormatException fex)
-                                           {
-                                               res.IsError = true;
-                                               res.Error = new ErrorResponse
-                                                               {
-                                                                   Message = new ErrorMessage
-                                                                                 {
-                                                                                     Message = "Error with Server",
-                                                                                     ExceptionMessage = fex.Message
-                                                                                 }
-                                                               };
-                                           }
-                                           catch (Exception ex)
-                                           {
-                                               res.IsError = true;
-                                               res.Error = new ErrorResponse
-                                               {
-                                                   Message = new ErrorMessage
-                                                   {
-                                                       Message = "Internal Exception Occured",
-                                                       ExceptionMessage = ex.Message
-                                                   }
-                                               };
-                                           }
-                                           callback(res);
-                                       });
+                                                            }
+                                                        }
+                                                        catch (FormatException fex)
+                                                        {
+                                                            res.IsError = true;
+                                                            res.Error = new ErrorResponse
+                                                            {
+                                                                Message = new ErrorMessage
+                                                                {
+                                                                    Message = "Error with Server",
+                                                                    ExceptionMessage = fex.Message
+                                                                }
+                                                            };
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            res.IsError = true;
+                                                            res.Error = new ErrorResponse
+                                                            {
+                                                                Message = new ErrorMessage
+                                                                {
+                                                                    Message = "Internal Exception Occured",
+                                                                    ExceptionMessage = ex.Message
+                                                                }
+                                                            };
+                                                        }
+                                                        return res;
+                                                    });
         }
     }
 }
