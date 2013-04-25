@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Grikly;
 using Grikly.Models;
 using Newtonsoft.Json;
@@ -10,44 +11,44 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public void GetContacts(string searchText, int page, Action<IHttpResponse<IList<Card>>> callback)
+        public Task<IHttpResponse<IList<Card>>> GetContacts(string searchText, int page)
         {
             string path = string.Format("Contacts?searchText={0}&page={1}", searchText, page);
-            Execute(new HttpRequest
+            return Execute<IList<Card>>(new HttpRequest
             {
                 Method = "GET"
-            }, path, callback);
+            }, path);
         }
 
-        public void CreateContact(Contact contact, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> CreateContact(Contact contact)
         {
             string path = "Contacts";
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
             {
                 Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(contact)),
                 Method = "POST",
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
 
-        public void UpdateContact(Contact contact, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> UpdateContact(Contact contact)
         {
             string path = string.Format("Contacts/{0}", contact.CardId);
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
             {
                 Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(contact)),
                 Method = "PUT",
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
-        public void DeleteContact(int id, Action<IHttpResponse<Card>> callback)
+        public Task<IHttpResponse<Card>> DeleteContact(int id)
         {
             string path = string.Format("Contacts/{0}", id);
-            Execute(new HttpRequest
+            return Execute<Card>(new HttpRequest
             {
                 Method = "DELETE",
                 ContentType = "application/json"
-            }, path, callback);
+            }, path);
         }
     }
 }

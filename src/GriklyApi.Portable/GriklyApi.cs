@@ -61,7 +61,7 @@ namespace Grikly
                 return Task.Factory.StartNew(() =>
                 {
                     var t = new TaskCompletionSource<IHttpResponse>();
-                    wr.BeginGetRequestStream(new AsyncCallback(ExecutePost), new HttpWebRequestData
+                    wr.BeginGetRequestStream(ExecutePost, new HttpWebRequestData
                     {
                         Data = request.Body,
                         Request = wr,
@@ -197,7 +197,7 @@ namespace Grikly
             }
         }
 
-        public Task<IHttpResponse<T>>  Execute<T>(IHttpRequest request, string path)
+        public Task<IHttpResponse<T>> Execute<T>(IHttpRequest request, string path)
         {
             return Execute(request, path).ContinueWith((result) =>
                                                     {

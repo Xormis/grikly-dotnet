@@ -14,7 +14,7 @@ namespace Grikly
             Execute(new HttpRequest
                         {
                             Method = "GET"
-                        }, path, callback);
+                        }, path);
         }
 
         public void UploadProfileImage(int id, byte[] data, string contentType, Action<IHttpResponse<string>> callback)
@@ -42,7 +42,7 @@ namespace Grikly
                 Method = "POST",
                 ContentType = "multipart/form-data; boundary=" + boundary,
                 Body = postData
-            }, path, callback);
+            }, path);
         }
     }
 }

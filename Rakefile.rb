@@ -65,6 +65,8 @@ nuspec :nus => :output do |nuspec|
    nuspec.language = "en-US"
    nuspec.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0"
    nuspec.dependency "Newtonsoft.Json", "4.5.0.0"
+   nuspec.dependency "Microsoft.Bcl", "1.0.19"
+   nuspec.dependency "Microsoft.Bcl.Build", "1.0.4"
    nuspec.projectUrl = "https://github.com/Xormis/grikly-dotnet"
    nuspec.working_directory = "out/"
    nuspec.output_file = "Grikly.nuspec"
