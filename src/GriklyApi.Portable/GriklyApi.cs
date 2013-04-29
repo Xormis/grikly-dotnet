@@ -50,6 +50,10 @@ namespace Grikly
                 authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
                 wr.Headers["Authorization"] = "Basic " + authInfo;
             }
+
+            //add api key to header
+            wr.Headers["ApiKey"] = ApiKey;
+
             
             foreach (var header in request.Headers)
             {
