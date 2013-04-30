@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Grikly.Models;
 using System;
 
@@ -8,16 +10,16 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
-        public void GetUser(int id, Action<IHttpResponse<User>> callback)
+        public Task<IHttpResponse<User>> GetUser(int id, CancellationToken token)
         {
             string path = string.Format("Users/{0}", id);
-            Execute(new HttpRequest
+            return Execute<User>(new HttpRequest
                         {
                             Method = "GET"
-                        }, path);
+                        }, path, token);
         }
 
-        public void UploadProfileImage(int id, byte[] data, string contentType, Action<IHttpResponse<string>> callback)
+        public Task<IHttpResponse<User>>  UploadProfileImage(int id, byte[] data, string contentType, CancellationToken token)
         {
             string path = string.Format("Users/{0}/ProfileImage", id);
 
@@ -37,12 +39,12 @@ namespace Grikly
                 writer.Flush();
                 postData = ms.ToArray();
             }
-            Execute(new HttpRequest
+            return Execute<User>(new HttpRequest
             {
                 Method = "POST",
                 ContentType = "multipart/form-data; boundary=" + boundary,
                 Body = postData
-            }, path);
+            }, path, token);
         }
     }
 }

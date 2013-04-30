@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Grikly.Models;
 using Newtonsoft.Json;
@@ -35,7 +36,7 @@ namespace Grikly
             credentialsUsed = true;
         }
         
-        public Task<IHttpResponse> Execute(IHttpRequest request, string path)
+        public Task<IHttpResponse> Execute(IHttpRequest request, string path, CancellationToken token)
         {
             //build up the uri
             UriBuilder uriBuilder = new UriBuilder(Configuration.BASE_URL+path);
@@ -73,7 +74,7 @@ namespace Grikly
                     });
 
                     return t.Task;
-                }).Unwrap();
+                }, token).Unwrap();
                 
             }
             else
@@ -83,7 +84,7 @@ namespace Grikly
                                                      var t = new TaskCompletionSource<IHttpResponse>();
                                                      ExecuteGet(wr, s=>t.TrySetResult(s));
                                                      return t.Task;
-                                                 }).Unwrap();
+                                                 }, token).Unwrap();
             }
         }
 
@@ -201,9 +202,9 @@ namespace Grikly
             }
         }
 
-        public Task<IHttpResponse<T>> Execute<T>(IHttpRequest request, string path)
+        public Task<IHttpResponse<T>> Execute<T>(IHttpRequest request, string path, CancellationToken token)
         {
-            return Execute(request, path).ContinueWith((result) =>
+            return Execute(request, path, token).ContinueWith((result) =>
                                                     {
                                                         IHttpResponse<T> res = new HttpResponse<T>(result.Result);
                                                         try
