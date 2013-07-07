@@ -47,6 +47,7 @@ namespace Grikly
             string path = string.Format("Contacts/{0}", id);
             return Execute<Card>(new HttpRequest
             {
+                Body = new byte[0],
                 Method = "DELETE",
                 ContentType = "application/json"
             }, path, token);

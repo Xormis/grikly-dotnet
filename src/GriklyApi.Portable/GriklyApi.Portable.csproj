@@ -44,6 +44,7 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\SendCardModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

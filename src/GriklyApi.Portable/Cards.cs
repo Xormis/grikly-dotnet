@@ -49,5 +49,15 @@ namespace Grikly
                 ContentType = "application/json"
             }, path, token);
         }
+
+        public Task<IHttpResponse<Card>> SendCard(int id, SendCardModel model, CancellationToken token)
+        {
+            string path = string.Format("Cards/{0}/", id);
+            return Execute<Card>(new HttpRequest
+            {
+                Method = "DELETE",
+                ContentType = "application/json"
+            }, path, token);
+        }
     }
 }
