@@ -29,5 +29,4 @@ out/
 build/
 packages/
 rakefile.config.rb
-/tests/Settings.cs
 /tests/AppSettings.config
