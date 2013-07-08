@@ -10,6 +10,12 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<User>> GetUser(int id, CancellationToken token)
         {
             string path = string.Format("Users/{0}", id);
@@ -19,6 +25,14 @@ namespace Grikly
                         }, path, token);
         }
 
+        /// <summary>
+        /// Uploads the profile image.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="contentType">Type of the content.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<User>>  UploadProfileImage(int id, byte[] data, string contentType, CancellationToken token)
         {
             string path = string.Format("Users/{0}/ProfileImage", id);

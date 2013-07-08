@@ -10,9 +10,10 @@ namespace Grikly
     public partial class GriklyApi
     {
         /// <summary>
-        /// Get a valid User by email and password
+        /// Get a valid User by Email and Password
         /// </summary>
-        /// <para name="login"></para>
+        /// <param name="login">The login.</param>
+        /// <param name="token">The token.</param>
         /// <returns></returns>
         public Task<IHttpResponse<User>> GetValidUser(LoginModel login, CancellationToken token)
         {
@@ -25,7 +26,12 @@ namespace Grikly
                                      }, path, token);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="register"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public Task<IHttpResponse<User>> Register(RegisterModel register, CancellationToken token)
         {
             string path = "Account/Register";
@@ -36,7 +42,12 @@ namespace Grikly
                 ContentType = "application/json"
             }, path, token);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public Task<IHttpResponse<bool>> EmailExist(string email, CancellationToken token)
         {
             string path = string.Format("Account/EmailExist?Email={0}", email);

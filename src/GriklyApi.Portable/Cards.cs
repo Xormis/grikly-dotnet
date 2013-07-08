@@ -9,6 +9,12 @@ namespace Grikly
 {
     public partial class GriklyApi
     {
+        /// <summary>
+        /// Gets the card.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<Card>> GetCard(int id, CancellationToken token)
         {
             string path = string.Format("Cards/{0}", id);
@@ -18,6 +24,12 @@ namespace Grikly
                                }, path,token);
         }
 
+        /// <summary>
+        /// Creates the card.
+        /// </summary>
+        /// <param name="card">The card.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<Card>> CreateCard(Card card, CancellationToken token)
         {
             string path = "Cards";
@@ -29,6 +41,12 @@ namespace Grikly
                         }, path,token );
         }
 
+        /// <summary>
+        /// Updates the card.
+        /// </summary>
+        /// <param name="card">The card.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<Card>> UpdateCard(Card card, CancellationToken token)
         {
             string path = string.Format("Cards/{0}", card.CardId);
@@ -40,6 +58,12 @@ namespace Grikly
             }, path,token);
         }
 
+        /// <summary>
+        /// Deletes the card.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<Card>> DeleteCard(int id, CancellationToken token)
         {
             string path = string.Format("Cards/{0}", id);
@@ -50,6 +74,13 @@ namespace Grikly
             }, path, token);
         }
 
+        /// <summary>
+        /// Sends the card.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="model">The model.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public Task<IHttpResponse<Card>> SendCard(int id, SendCardModel model, CancellationToken token)
         {
             string path = string.Format("Cards/{0}/", id);

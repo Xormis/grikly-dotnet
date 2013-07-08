@@ -9,30 +9,51 @@ using Newtonsoft.Json;
 
 namespace Grikly
 {
+    /// <summary>
+    /// Grik.ly API wrapper that contains REST API calls.
+    /// </summary>
     public partial class GriklyApi
     {
         private bool credentialsUsed = false;
+        /// <summary>
+        /// The API Key that is used to validate requests to the server.
+        /// </summary>
         public string ApiKey { get; private set; }
 
         //intention is to remove usernames and password requirements in version 2 (using OAUTH)
-        public string Email { get; private set; }
+        /// <summary>
+        /// The _email of the user to make authenticated requests
+        /// </summary>
+        private string _email;
 
-        public string Password { get; private set; }
+        /// <summary>
+        /// The password of the user to make authenticated requests
+        /// </summary>
+        private string _password;
 
         #region Fields
 
         #endregion Fields
 
+        /// <summary>
+        /// Create an instance of the Grik.ly API client.
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="useSsl"></param>
         public GriklyApi(string apiKey, bool useSsl = true)
         {
             ApiKey = apiKey;
-
         }
 
+        /// <summary>
+        /// Add the credentials of the user to make authenticated requests
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
         public void AddValidUserCredentials(string email, string password)
         {
-            Email = email;
-            Password = password;
+            _email = email;
+            _password = password;
             credentialsUsed = true;
         }
         
@@ -47,7 +68,7 @@ namespace Grikly
             wr.Method = request.Method;
             if(credentialsUsed)
             {
-                string authInfo = Email + ":" + Password;
+                string authInfo = _email + ":" + _password;
                 authInfo = Convert.ToBase64String(Encoding.UTF8.GetBytes(authInfo));
                 wr.Headers["Authorization"] = "Basic " + authInfo;
             }
