@@ -28,7 +28,7 @@ namespace Grikly.Tests.IntegrationTests
         {
             
         }
-
+        [Ignore]
         [Test]
         public void Profile_Image_Can_Be_Uploaded()
         {
