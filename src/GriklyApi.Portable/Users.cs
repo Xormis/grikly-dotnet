@@ -1,64 +1,107 @@
-﻿using System.IO;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Grikly.Models;
-using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Users.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The grikly api.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Grikly
 {
+    using System;
+    using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using Grikly.Models;
+
+    /// <summary>
+    /// The grikly api.
+    /// </summary>
     public partial class GriklyApi
     {
+        #region Public Methods and Operators
+
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="token">
+        /// The token.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         public Task<IHttpResponse<User>> GetUser(int id, CancellationToken token)
         {
             string path = string.Format("Users/{0}", id);
-            return Execute<User>(new HttpRequest
-                        {
-                            Method = "GET"
-                        }, path, token);
+            return this.Execute<User>(new HttpRequest { Method = "GET" }, path, token);
         }
 
         /// <summary>
         /// Uploads the profile image.
         /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="data">The data.</param>
-        /// <param name="contentType">Type of the content.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
-        public Task<IHttpResponse<User>>  UploadProfileImage(int id, byte[] data, string contentType, CancellationToken token)
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <param name="data">
+        /// The data.
+        /// </param>
+        /// <param name="contentType">
+        /// Type of the content.
+        /// </param>
+        /// <param name="token">
+        /// The token.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<IHttpResponse<User>> UploadProfileImage(
+            int id, 
+            byte[] data, 
+            string contentType, 
+            CancellationToken token)
         {
             string path = string.Format("Users/{0}/ProfileImage", id);
 
-            var boundary = "----" + DateTime.Now.Ticks;
-            var fileHeaderFormat = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type= {3}\r\n", boundary, "image", "image", contentType);
+            string boundary = "----" + DateTime.Now.Ticks;
+            string fileHeaderFormat =
+                string.Format(
+                    "--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type= {3}\r\n", 
+                    boundary, 
+                    "image", 
+                    "image", 
+                    contentType);
             byte[] postData;
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-
-                StreamWriter writer = new StreamWriter(ms);
+                var writer = new StreamWriter(ms);
                 writer.Write(fileHeaderFormat);
                 writer.Flush();
+
                 // You could also just use StreamWriter to do "writer.Write(bytes)"
                 ms.Write(data, 0, data.Length);
-                
+
                 writer.Write("\r\n--" + boundary + "--\r\n");
                 writer.Flush();
                 postData = ms.ToArray();
             }
-            return Execute<User>(new HttpRequest
-            {
-                Method = "POST",
-                ContentType = "multipart/form-data; boundary=" + boundary,
-                Body = postData
-            }, path, token);
+
+            return
+                this.Execute<User>(
+                    new HttpRequest
+                        {
+                            Method = "POST", 
+                            ContentType = "multipart/form-data; boundary=" + boundary, 
+                            Body = postData
+                        }, 
+                    path, 
+                    token);
         }
+
+        #endregion
     }
 }
