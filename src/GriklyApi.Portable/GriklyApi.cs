@@ -75,14 +75,26 @@ namespace Grikly
         /// Add the credentials of the user to make authenticated requests
         /// </summary>
         /// <param name="email">
+        /// the email
         /// </param>
         /// <param name="password">
+        /// the password
         /// </param>
-        public void AddValidUserCredentials(string email, string password)
+        public void AddCredentials(string email, string password)
         {
             this._email = email;
             this._password = password;
             this._credentialsUsed = true;
+        }
+
+        /// <summary>
+        /// Remove the credentials of the user for making authenticated requests
+        /// </summary>
+        public void RemoveCredentials()
+        {
+            this._email = string.Empty;
+            this._password = string.Empty;
+            this._credentialsUsed = false;
         }
 
         /// <summary>
