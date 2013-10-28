@@ -63,6 +63,7 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PagedModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SendCardModel.cs" />
     <Compile Include="Models\User.cs" />

@@ -14,6 +14,8 @@ namespace Grikly
     using System.Threading;
     using System.Threading.Tasks;
 
+    using global::GriklyApi.Models;
+
     using Grikly.Models;
 
     using Newtonsoft.Json;
@@ -73,28 +75,13 @@ namespace Grikly
                     path, 
                     token);
         }
+        
 
-        /// <summary>
-        /// Gets the contacts.
-        /// </summary>
-        /// <param name="searchText">
-        /// The search text.
-        /// </param>
-        /// <param name="page">
-        /// The page.
-        /// </param>
-        /// <param name="token">
-        /// The token.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public Task<IHttpResponse<IList<Card>>> GetContacts(string searchText, int page, CancellationToken token)
+        public Task<IHttpResponse<PagingModel<Card>>> GetContacts(string searchText, int page, int pageSize, CancellationToken token)
         {
-            string path = string.Format("Contacts?searchText={0}&page={1}", searchText, page);
-            return this.Execute<IList<Card>>(new HttpRequest { Method = "GET" }, path, token);
+            string path = string.Format("Contacts?SearchText={0}&Page={1}&PageSize={2}", searchText, page, pageSize);
+            return this.Execute<PagingModel<Card>>(new HttpRequest { Method = "GET" }, path, token);
         }
-
         /// <summary>
         /// Updates the contact.
         /// </summary>

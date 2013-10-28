@@ -26,6 +26,8 @@ namespace Grikly
         /// </summary>
         public static string BASE_URL = "http://api.grik.ly/v1/";
 
+        public static string BASE_BETA_URL = "http://griklyapibeta.azurewebsites.net/v1";
+
         #endregion
     }
 }

@@ -26,6 +26,8 @@ namespace Grikly
         // intention is to remove usernames and password requirements in version 2 (using OAUTH)
         #region Fields
 
+        private bool useBetaUrl;
+
         /// <summary>
         /// The _credentials used.
         /// </summary>
@@ -53,7 +55,7 @@ namespace Grikly
         /// </param>
         /// <param name="useSsl">
         /// </param>
-        public GriklyApi(string apiKey, bool useSsl = true)
+        public GriklyApi(string apiKey, bool useSsl = true, bool useBetaUrl = false)
         {
             this.ApiKey = apiKey;
         }
@@ -114,8 +116,9 @@ namespace Grikly
         /// </returns>
         public Task<IHttpResponse> Execute(IHttpRequest request, string path, CancellationToken token)
         {
+            var baseUrl = useBetaUrl ? Configuration.BASE_BETA_URL : Configuration.BASE_URL;
             // build up the uri
-            var uriBuilder = new UriBuilder(Configuration.BASE_URL + path);
+            var uriBuilder = new UriBuilder(baseUrl + path);
             var wr = (HttpWebRequest)WebRequest.Create(uriBuilder.Uri);
 
             // transfer details from request to wr
