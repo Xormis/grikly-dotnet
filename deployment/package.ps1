@@ -7,6 +7,6 @@ Write-Host "Setting .nuspec version tag to $versionStr"
 $content = (Get-Content $root\deployment\Grikly.nuspec) 
 $content = $content -replace '\$version\$',$versionStr
 
-$content | Out-File $root\nuget\MarkdownLog.compiled.nuspec
+$content | Out-File $root\nuget\Grikly.compiled.nuspec
 
 & $root\.nuget\NuGet.exe pack $root\deployment\Grikly.compiled.nuspec
