@@ -7,129 +7,149 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Grikly.Models
+namespace GriklyApi.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
-    /// The card.
+    ///     The card.
     /// </summary>
     public class Card
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the card id.
+        ///     Gets or sets the card id.
         /// </summary>
-        public int CardId { get; set; }
+        public Guid CardId { get; set; }
 
         /// <summary>
-        /// Gets or sets the cell number.
-        /// </summary>
-        public string CellNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the company address.
+        ///     Gets or sets the company address.
         /// </summary>
         public string CompanyAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the company fax.
+        ///     Gets or sets the company fax.
         /// </summary>
         public string CompanyFax { get; set; }
 
         /// <summary>
-        /// Gets or sets the company latitude.
+        ///     Gets or sets the company latitude.
         /// </summary>
         public double CompanyLatitude { get; set; }
 
         /// <summary>
-        /// Gets or sets the company longitude.
+        ///     Gets or sets the company longitude.
         /// </summary>
         public double CompanyLongitude { get; set; }
 
         /// <summary>
-        /// Gets or sets the company name.
+        ///     Gets or sets the company name.
         /// </summary>
         public string CompanyName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the company phone.
-        /// </summary>
-        public string CompanyPhone { get; set; }
 
         /// <summary>
-        /// Gets or sets the contact.
+        ///     Gets or sets the contact.
         /// </summary>
         public Contact Contact { get; set; }
 
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        public string Email { get; set; }
+
+        public IList<ContactEmailAddress> EmailAddresses { get; set; }
 
         /// <summary>
-        /// Gets or sets the facebook url.
+        ///     Gets or sets the facebook url.
         /// </summary>
         public string FacebookUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the first name.
+        ///     Gets or sets the first name.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Gets or sets the last name.
+        ///     Gets or sets the last name.
         /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the logo url.
+        ///     Gets or sets the logo url.
         /// </summary>
         public string LogoUrl { get; set; }
 
+        public IList<ContactPhoneNumber> PhoneNumbers { get; set; }
+
         /// <summary>
-        /// Gets or sets the qr code url.
+        ///     Gets or sets the qr code url.
         /// </summary>
         public string QrCodeUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the qr v card url.
+        ///     Gets or sets the qr v card url.
         /// </summary>
         public string QrVCardUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the shared count.
+        ///     Gets or sets the shared count.
         /// </summary>
         public int SharedCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the title.
+        ///     Gets or sets the title.
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the user id.
+        ///     Gets or sets the user id.
         /// </summary>
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the user profile image url.
+        ///     Gets or sets the user profile image url.
         /// </summary>
         public string UserProfileImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the v card url.
+        ///     Gets or sets the v card url.
         /// </summary>
         public string VCardUrl { get; set; }
 
-        /// <summary>
-        /// Gets or sets the website.
-        /// </summary>
-        public string Website { get; set; }
 
-        /// <summary>
-        /// Gets or sets the work number.
-        /// </summary>
-        public string WorkNumber { get; set; }
+        public IList<ContactWebsite> Websites { get; set; }
+
+        #endregion
+    }
+
+    public class ContactPhoneNumber
+    {
+        #region Public Properties
+
+        public string Kind { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        #endregion
+    }
+
+    public class ContactWebsite
+    {
+        #region Public Properties
+
+        public string Kind { get; set; }
+
+        public string WebsiteAddress { get; set; }
+
+        #endregion
+    }
+
+    public class ContactEmailAddress
+    {
+        #region Public Properties
+
+        public string EmailAddress { get; set; }
+
+        public string Kind { get; set; }
 
         #endregion
     }

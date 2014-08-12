@@ -5,7 +5,6 @@
 // <summary>
 //   Indicates that marked element should be localized or not.
 // </summary>
-// 
 // --------------------------------------------------------------------------------------------------------------------
 namespace Grikly.Annotations
 {
@@ -67,7 +66,7 @@ namespace Grikly.Annotations
         /// Returns whether the value of the given object is equal to the current <see cref="LocalizationRequiredAttribute"/>.
         /// </summary>
         /// <param name="obj">
-        /// The object to test the value equality of. 
+        /// The object to test the value equality of.
         /// </param>
         /// <returns>
         /// <c>true</c> if the value of the given object is equal to that of the current; otherwise, <c>false</c>.
@@ -114,8 +113,8 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringFormatMethodAttribute"/> class. 
-        /// Initializes new instance of StringFormatMethodAttribute
+        /// Initializes a new instance of the <see cref="StringFormatMethodAttribute"/> class.
+        ///     Initializes new instance of StringFormatMethodAttribute
         /// </summary>
         /// <param name="formatParameterName">
         /// Specifies which parameter of an annotated method should be treated as format-string
@@ -226,7 +225,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute" /> class.
         /// </summary>
         public NotifyPropertyChangedInvocatorAttribute()
         {
@@ -248,7 +247,7 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the parameter name.
+        ///     Gets the parameter name.
         /// </summary>
         [UsedImplicitly]
         public string ParameterName { get; private set; }
@@ -391,12 +390,12 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the fdt.
+        ///     Gets the fdt.
         /// </summary>
         public string FDT { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether force full states.
+        ///     Gets a value indicating whether force full states.
         /// </summary>
         public bool ForceFullStates { get; private set; }
 
@@ -458,8 +457,8 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTypeRequiredAttribute"/> class. 
-        /// Initializes new instance of BaseTypeRequiredAttribute
+        /// Initializes a new instance of the <see cref="BaseTypeRequiredAttribute"/> class.
+        ///     Initializes new instance of BaseTypeRequiredAttribute
         /// </summary>
         /// <param name="baseType">
         /// Specifies which types are required
@@ -491,7 +490,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
         /// </summary>
         [UsedImplicitly]
         public UsedImplicitlyAttribute()
@@ -550,7 +549,7 @@ namespace Grikly.Annotations
         public ImplicitUseTargetFlags TargetFlags { get; private set; }
 
         /// <summary>
-        /// Gets the use kind flags.
+        ///     Gets the use kind flags.
         /// </summary>
         [UsedImplicitly]
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -568,7 +567,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
         /// </summary>
         [UsedImplicitly]
         public MeansImplicitUseAttribute()
@@ -627,7 +626,7 @@ namespace Grikly.Annotations
         public ImplicitUseTargetFlags TargetFlags { get; private set; }
 
         /// <summary>
-        /// Gets the use kind flags.
+        ///     Gets the use kind flags.
         /// </summary>
         [UsedImplicitly]
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -636,13 +635,13 @@ namespace Grikly.Annotations
     }
 
     /// <summary>
-    /// The implicit use kind flags.
+    ///     The implicit use kind flags.
     /// </summary>
     [Flags]
     public enum ImplicitUseKindFlags
     {
         /// <summary>
-        /// The default.
+        ///     The default.
         /// </summary>
         Default = Access | Assign | InstantiatedWithFixedConstructorSignature, 
 
@@ -676,12 +675,12 @@ namespace Grikly.Annotations
     public enum ImplicitUseTargetFlags
     {
         /// <summary>
-        /// The default.
+        ///     The default.
         /// </summary>
         Default = Itself, 
 
         /// <summary>
-        /// The itself.
+        ///     The itself.
         /// </summary>
         Itself = 1, 
 
@@ -705,7 +704,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PublicAPIAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PublicAPIAttribute" /> class.
         /// </summary>
         public PublicAPIAttribute()
         {
@@ -768,7 +767,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathReferenceAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PathReferenceAttribute" /> class.
         /// </summary>
         public PathReferenceAttribute()
         {
@@ -791,7 +790,7 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the base path.
+        ///     Gets the base path.
         /// </summary>
         [UsedImplicitly]
         public string BasePath { get; private set; }
@@ -813,7 +812,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcActionAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcActionAttribute" /> class.
         /// </summary>
         public AspMvcActionAttribute()
         {
@@ -835,7 +834,7 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [UsedImplicitly]
         public string AnonymousProperty { get; private set; }
@@ -854,7 +853,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcAreaAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcAreaAttribute" /> class.
         /// </summary>
         [UsedImplicitly]
         public AspMvcAreaAttribute()
@@ -877,7 +876,7 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [UsedImplicitly]
         public string AnonymousProperty { get; private set; }
@@ -897,7 +896,7 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcControllerAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcControllerAttribute" /> class.
         /// </summary>
         public AspMvcControllerAttribute()
         {
@@ -919,7 +918,7 @@ namespace Grikly.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [UsedImplicitly]
         public string AnonymousProperty { get; private set; }

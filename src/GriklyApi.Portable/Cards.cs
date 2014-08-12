@@ -6,21 +6,25 @@
 //   The grikly api.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-namespace Grikly
+namespace GriklyApi
 {
+    using System;
+    using System.Net.Http;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Grikly.Models;
+
+    using Grikly;
+
+    using GriklyApi.Models;
 
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The grikly api.
+    ///     The grikly api.
     /// </summary>
-    public partial class GriklyApi
+    public partial class GriklyClient : IGriklyClient
     {
         #region Public Methods and Operators
 
@@ -36,18 +40,19 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> CreateCard(Card card, CancellationToken token)
+        public Task<IHttpResponse<object>> CreateCard(Card card, CancellationToken token)
         {
-            string path = "Cards";
+            string path = "v1/Cards";
             return
-                this.Execute<Card>(
-                    new HttpRequest
+                this.Execute<object>(
+                    new HttpRequestMessage(HttpMethod.Post, path)
                         {
-                            Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(card)), 
-                            Method = "POST", 
-                            ContentType = "application/json"
-                        }, 
-                    path, 
+                            Content =
+                                new StringContent(
+                                JsonConvert.SerializeObject(card),
+                                Encoding.UTF8,
+                                "application/json"),
+                        },
                     token);
         }
 
@@ -63,13 +68,10 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> DeleteCard(int id, CancellationToken token)
+        public Task<IHttpResponse<Card>> DeleteCard(Guid id, CancellationToken token)
         {
-            string path = string.Format("Cards/{0}", id);
-            return this.Execute<Card>(
-                new HttpRequest { Method = "DELETE", ContentType = "application/json" }, 
-                path, 
-                token);
+            string path = string.Format("v1/Cards/{0}", id);
+            return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Delete, path), token);
         }
 
         /// <summary>
@@ -84,10 +86,10 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> GetCard(int id, CancellationToken token)
+        public Task<IHttpResponse<Card>> GetCard(Guid id, CancellationToken token)
         {
-            string path = string.Format("Cards/{0}", id);
-            return this.Execute<Card>(new HttpRequest { Method = "GET" }, path, token);
+            string path = string.Format("v1/Cards/{0}", id);
+            return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
 
         /// <summary>
@@ -105,13 +107,11 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> SendCard(int id, SendCardModel model, CancellationToken token)
+        public Task<IHttpResponse<Card>> SendCard(Guid id, SendCardModel model, CancellationToken token)
         {
-            string path = string.Format("Cards/{0}/", id);
+            string path = string.Format("v1/Cards/{0}/", id);
             return this.Execute<Card>(
-                new HttpRequest { Method = "DELETE", ContentType = "application/json" }, 
-                path, 
-                token);
+                new HttpRequestMessage(HttpMethod.Delete, path), token);
         }
 
         /// <summary>
@@ -128,16 +128,17 @@ namespace Grikly
         /// </returns>
         public Task<IHttpResponse<Card>> UpdateCard(Card card, CancellationToken token)
         {
-            string path = string.Format("Cards/{0}", card.CardId);
+            string path = string.Format("v1/Cards/{0}", card.CardId);
             return
                 this.Execute<Card>(
-                    new HttpRequest
+                    new HttpRequestMessage(HttpMethod.Put, path)
                         {
-                            Body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(card)), 
-                            Method = "PUT", 
-                            ContentType = "application/json"
-                        }, 
-                    path, 
+                            Content =
+                                new StringContent(
+                                JsonConvert.SerializeObject(card),
+                                Encoding.UTF8,
+                                "application/json"),
+                        },
                     token);
         }
 

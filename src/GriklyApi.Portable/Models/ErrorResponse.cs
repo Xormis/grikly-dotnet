@@ -6,27 +6,26 @@
 //   The error response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-namespace Grikly
+namespace GriklyApi.Models
 {
     using System.Net;
 
     /// <summary>
-    /// The error response.
+    ///     The error response.
     /// </summary>
     public class ErrorResponse
     {
-        #region Fields
+        #region Public Properties
 
         /// <summary>
-        /// The http status code.
+        ///     The http status code.
         /// </summary>
-        public HttpStatusCode HttpStatusCode;
+        public HttpStatusCode HttpStatusCode { get; set; }
 
         /// <summary>
-        /// The message.
+        ///     The message.
         /// </summary>
-        public ErrorMessage Message;
+        public ErrorMessage ErrorMessage { get; set; }
 
         #endregion
     }

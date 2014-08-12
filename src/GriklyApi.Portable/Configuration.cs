@@ -6,27 +6,29 @@
 //   The configuration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Grikly
 {
     /// <summary>
-    /// The configuration.
+    ///     The configuration.
     /// </summary>
     internal static class Configuration
     {
         #region Static Fields
 
         /// <summary>
-        /// The bas e_ secur e_ url.
+        /// The bas e_ bet a_ url.
         /// </summary>
-        public static string BASE_SECURE_URL = "https://api.grik.ly/v1/";
+        public static string BASE_BETA_URL = "http://api.grik.ly/";
+        //public static string BASE_BETA_URL = "http://localhost/api/";
+        /// <summary>
+        ///     The bas e_ secur e_ url.
+        /// </summary>
+        public static string BASE_SECURE_URL = "https://api.grik.ly/";
 
         /// <summary>
-        /// The bas e_ url.
+        ///     The bas e_ url.
         /// </summary>
-        public static string BASE_URL = "http://api.grik.ly/v1/";
-
-        public static string BASE_BETA_URL = "http://griklyapibeta.azurewebsites.net/v1";
+        public static string BASE_URL = "http://api.grik.ly/";
 
         #endregion
     }

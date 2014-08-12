@@ -6,40 +6,46 @@
 //   The http response.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-namespace Grikly
+namespace GriklyApi.Models
 {
     using System.Collections.Generic;
 
     /// <summary>
-    /// The http response.
+    ///     The http response.
     /// </summary>
     public class HttpResponse : IHttpResponse
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the content length.
+        ///     Gets or sets the content length.
         /// </summary>
         public long ContentLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type.
+        /// 
+        /// </summary>
+        public string Location { get; set; }
+
+        public string CreatedContentId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the content type.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the error.
+        ///     Gets or sets the error.
         /// </summary>
         public ErrorResponse Error { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether is error.
+        ///     Gets or sets a value indicating whether is error.
         /// </summary>
         public bool IsError { get; set; }
 
         /// <summary>
-        /// Gets or sets the raw bytes.
+        ///     Gets or sets the raw bytes.
         /// </summary>
         public byte[] RawBytes { get; set; }
 
@@ -56,7 +62,7 @@ namespace Grikly
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpResponse{T}"/> class.
+        ///     Initializes a new instance of the <see cref="HttpResponse{T}" /> class.
         /// </summary>
         public HttpResponse()
         {
@@ -75,6 +81,8 @@ namespace Grikly
             this.ContentType = responseResult.ContentType;
             this.RawBytes = responseResult.RawBytes;
             this.ContentLength = responseResult.ContentLength;
+            this.Location = responseResult.Location;
+            this.CreatedContentId = responseResult.CreatedContentId;
         }
 
         #endregion
@@ -82,32 +90,39 @@ namespace Grikly
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the content length.
+        ///     Gets or sets the content length.
         /// </summary>
         public long ContentLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type.
+        /// 
+        /// </summary>
+        public string Location { get; set; }
+
+        public string CreatedContentId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the content type.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the data.
+        ///     Gets or sets the data.
         /// </summary>
         public T Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the error.
+        ///     Gets or sets the error.
         /// </summary>
         public ErrorResponse Error { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether is error.
+        ///     Gets or sets a value indicating whether is error.
         /// </summary>
         public bool IsError { get; set; }
 
         /// <summary>
-        /// Gets or sets the raw bytes.
+        ///     Gets or sets the raw bytes.
         /// </summary>
         public byte[] RawBytes { get; set; }
 
@@ -115,34 +130,40 @@ namespace Grikly
     }
 
     /// <summary>
-    /// The HttpResponse interface.
+    ///     The HttpResponse interface.
     /// </summary>
     public interface IHttpResponse
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the content length.
+        ///     Gets or sets the content length.
         /// </summary>
         long ContentLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type.
+        ///     Get or sets the location
+        /// </summary>
+        string Location { get; set; }
+        string CreatedContentId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the content type.
         /// </summary>
         string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the error.
+        ///     Gets or sets the error.
         /// </summary>
         ErrorResponse Error { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether is error.
+        ///     Gets or sets a value indicating whether is error.
         /// </summary>
         bool IsError { get; set; }
 
         /// <summary>
-        /// Gets or sets the raw bytes.
+        ///     Gets or sets the raw bytes.
         /// </summary>
         byte[] RawBytes { get; set; }
 
@@ -159,7 +180,7 @@ namespace Grikly
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the data.
+        ///     Gets or sets the data.
         /// </summary>
         T Data { get; set; }
 
@@ -167,14 +188,14 @@ namespace Grikly
     }
 
     /// <summary>
-    /// The http request.
+    ///     The http request.
     /// </summary>
     public class HttpRequest : IHttpRequest
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpRequest"/> class.
+        ///     Initializes a new instance of the <see cref="HttpRequest" /> class.
         /// </summary>
         public HttpRequest()
         {
@@ -187,27 +208,27 @@ namespace Grikly
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the body.
+        ///     Gets or sets the body.
         /// </summary>
         public byte[] Body { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type.
+        ///     Gets or sets the content type.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the headers.
+        ///     Gets or sets the headers.
         /// </summary>
         public Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// Gets or sets the method.
+        ///     Gets or sets the method.
         /// </summary>
         public string Method { get; set; }
 
         /// <summary>
-        /// Gets or sets the url.
+        ///     Gets or sets the url.
         /// </summary>
         public string Url { get; set; }
 
@@ -215,34 +236,34 @@ namespace Grikly
     }
 
     /// <summary>
-    /// The HttpRequest interface.
+    ///     The HttpRequest interface.
     /// </summary>
     public interface IHttpRequest
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the body.
+        ///     Gets or sets the body.
         /// </summary>
         byte[] Body { get; set; }
 
         /// <summary>
-        /// Gets or sets the content type.
+        ///     Gets or sets the content type.
         /// </summary>
         string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the headers.
+        ///     Gets or sets the headers.
         /// </summary>
         Dictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// Gets or sets the method.
+        ///     Gets or sets the method.
         /// </summary>
         string Method { get; set; }
 
         /// <summary>
-        /// Gets or sets the url.
+        ///     Gets or sets the url.
         /// </summary>
         string Url { get; set; }
 
