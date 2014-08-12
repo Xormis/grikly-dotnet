@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20623.1 VSUPREVIEW
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}"
 EndProject
@@ -19,6 +19,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grikly.Tests", "tests\Grikly.Tests.csproj", "{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GriklyApi.Portable", "src\GriklyApi.Portable\GriklyApi.Portable.csproj", "{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{663F0A41-0EB4-41A2-B0A8-DB1345F88986}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,7 +46,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259} = {FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}
 		{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F} = {14C4FDB7-D299-43DD-95EB-27E148EB3998}
+		{BEBF6BAC-D80B-4591-9E98-3D01AA8F9259} = {FD6479F1-65F7-4D55-9404-8E3BEE55CE7C}
 	EndGlobalSection
 EndGlobal
