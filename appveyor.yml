@@ -25,9 +25,3 @@ artifacts:
   - path: src\GriklyApi.Portable\bin\Release\GriklyApi.dll
     name: GriklyApi.dll
   - path: '**\Grikly*.nupkg'
-
-deploy:
-  provider: NuGet
-  api_key:
-    secure: j4PGeInhGQyO3PcgZUmCZRfrJ9Aen2kkOPHse3SBXrdgcj8Jlie65yx75us9OJzE
-  artifact: /.*\.nupkg/
