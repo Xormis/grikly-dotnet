@@ -1,4 +1,4 @@
-# Grikly Dot Net
+# Grikly Dot Net [![Build status](https://ci.appveyor.com/api/projects/status/esmclbge55jru4qc)](https://ci.appveyor.com/project/xormis/grikly-dotnet)
 
 ## NuGet
 
