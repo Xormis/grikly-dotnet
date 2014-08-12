@@ -9,11 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{14C4FDB7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3112DAD-62E1-43EB-A4CC-4FA810592088}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		AssemblyInfo.cs = AssemblyInfo.cs
 		LICENSE.txt = LICENSE.txt
-		Rakefile.rb = Rakefile.rb
 		README.md = README.md
-		VERSION = VERSION
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grikly.Tests", "tests\Grikly.Tests.csproj", "{E1794659-C6A2-4B00-BCFB-0CF54CE9FD3F}"
@@ -25,6 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{663F0A
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment", "deployment", "{798CB463-A001-4806-BEA6-1C347DFEB64B}"
+	ProjectSection(SolutionItems) = preProject
+		deployment\package.ps1 = deployment\package.ps1
 	EndProjectSection
 EndProject
 Global
