@@ -24,7 +24,7 @@ after_test:
 artifacts:
   - path: src\GriklyApi.Portable\bin\Release\GriklyApi.dll
     name: GriklyApi.dll
-  - path: '**\GriklyApi.nupkg'
+  - path: '**\Grikly*.nupkg'
 
 deploy:
   provider: NuGet
