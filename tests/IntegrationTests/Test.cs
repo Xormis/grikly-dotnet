@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using Grikly.Models;
 
 namespace Grikly.Tests.IntegrationTests
 {

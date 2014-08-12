@@ -28,16 +28,6 @@ namespace Grikly.Tests.IntegrationTests
         {
             
         }
-        [Ignore]
-        [Test]
-        public void Profile_Image_Can_Be_Uploaded()
-        {
-            var api = new GriklyApi(apiKey);
-            api.AddCredentials(userEmail,userPassword);
-            var userId = int.Parse(ConfigurationManager.AppSettings["UserId"]);
-
-            //api.UploadProfileImage(userId, new byte[] {}, "image", CancellationToken.None);
-        }
 
 
     }
