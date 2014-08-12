@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{663F0A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment", "deployment", "{798CB463-A001-4806-BEA6-1C347DFEB64B}"
 	ProjectSection(SolutionItems) = preProject
+		deployment\Grikly.nuspec = deployment\Grikly.nuspec
 		deployment\package.ps1 = deployment\package.ps1
 	EndProjectSection
 EndProject
