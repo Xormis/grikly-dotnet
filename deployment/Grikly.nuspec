@@ -10,8 +10,18 @@
         <projectUrl>https://github.com/Xormis/grikly-dotnet</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Grikly is an API wrapper to help developers getting started with the grikly api fast and easy.</description>
+        <tags>Grikly, Cards, Contact</tags>
+        <dependencies>
+            <dependency id="Microsoft.Bcl" version="1.1.9" />
+            <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+            <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+            <dependency id="Microsoft.Net.Http" version="2.2.23-beta" />
+            <dependency id="Newtonsoft.Json" version="6.0.3" />
+        </dependencies>
     </metadata>
     <files>
         <file src="..\src\GriklyApi.Portable\bin\Release\GriklyApi.dll" target="lib\portable-net4+sl4+wp71+win8\GriklyApi.dll" />
+        <file src="..\src\GriklyApi.Portable\bin\Release\GriklyApi.pdb" target="lib\portable-net4+sl4+wp71+win8\GriklyApi.pdb" />
+        <file src="..\src\GriklyApi.Portable\bin\Release\GriklyApi.XML" target="lib\portable-net4+sl4+wp71+win8\GriklyApi.XML" />
     </files>
 </package>

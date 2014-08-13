@@ -56,6 +56,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\GriklyApi.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Accounts.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Contacts.cs" />
     <Compile Include="Converters\ErrorConverter.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="IGriklyClient.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
