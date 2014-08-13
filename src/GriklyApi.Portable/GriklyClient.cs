@@ -56,13 +56,13 @@ namespace GriklyApi
         /// </param>
         /// <param name="useSsl">
         /// </param>
-        /// <param name="useBetaUrl">
-        /// The use Beta Url.
+        /// <param name="useTestApi">
+        /// Set to true if using the test API.
         /// </param>
-        public GriklyClient(string apiKey, bool useSsl = true, bool useBetaUrl = false)
+        public GriklyClient(string apiKey, bool useSsl = true, bool useTestApi = false)
         {
             this.ApiKey = apiKey;
-            this.useBetaUrl = useBetaUrl;
+            this.useBetaUrl = useTestApi;
 
             string baseUrl = this.useBetaUrl ? Configuration.BASE_BETA_URL : Configuration.BASE_URL;
 

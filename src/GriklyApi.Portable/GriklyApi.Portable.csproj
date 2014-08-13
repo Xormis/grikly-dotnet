@@ -72,6 +72,7 @@
     <Compile Include="GriklyClient.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PagedModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />

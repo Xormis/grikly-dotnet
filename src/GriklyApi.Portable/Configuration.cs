@@ -23,7 +23,7 @@ namespace Grikly
         /// <summary>
         ///     The bas e_ secur e_ url.
         /// </summary>
-        public static string BASE_SECURE_URL = "https://api.grik.ly/";
+        public static string BASE_SECURE_URL = "https://griklyapi.azurewebsites.net/";
 
         /// <summary>
         ///     The bas e_ url.

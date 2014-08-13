@@ -259,5 +259,13 @@ namespace Grikly
 
         Task<IHttpResponse> ConfirmEmail(string email, string code, CancellationToken token);
         Task<IHttpResponse> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token);
+
+        /// <summary>
+        /// Creates the event.
+        /// </summary>
+        /// <param name="eventModel">The event model.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        Task<IHttpResponse> CreateEvent(EventModel eventModel, CancellationToken token);
     }
 }
