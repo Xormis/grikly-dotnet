@@ -87,6 +87,16 @@ namespace GriklyApi
                                     }, token);
         }
 
+        public Task<IHttpResponse> ResendConfirmation(string email, CancellationToken token)
+        {
+            string path = "v1/Account/ResendConfirmation";
+            return this.Execute(new HttpRequestMessage(HttpMethod.Post, path)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(new {Email = email}), Encoding.UTF8, "application/json")
+            }, token);
+        }
+
+
         public Task<IHttpResponse> Recover(string email, CancellationToken token)
         {
             string path = "v1/Account/Recover";

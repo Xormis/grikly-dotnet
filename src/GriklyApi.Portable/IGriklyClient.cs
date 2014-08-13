@@ -267,5 +267,7 @@ namespace Grikly
         /// <param name="token">The token.</param>
         /// <returns></returns>
         Task<IHttpResponse> CreateEvent(EventModel eventModel, CancellationToken token);
+
+        Task<IHttpResponse> ResendConfirmation(string email, CancellationToken token);
     }
 }
