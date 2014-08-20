@@ -38,5 +38,47 @@ namespace GriklyApi.Models
         /// The end.
         /// </value>
         public DateTime End { get; set; }
+        /// <summary>
+        /// Gets or sets the street.
+        /// </summary>
+        /// <value>
+        /// The street.
+        /// </value>
+        public string Street { get; set; }
+        /// <summary>
+        /// Gets or sets the route.
+        /// </summary>
+        /// <value>
+        /// The route.
+        /// </value>
+        public string Route { get; set; }
+        /// <summary>
+        /// Gets or sets the city.
+        /// </summary>
+        /// <value>
+        /// The city.
+        /// </value>
+        public string City { get; set; }
+        /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        /// <value>
+        /// The state.
+        /// </value>
+        public string State { get; set; }
+        /// <summary>
+        /// Gets or sets the zip code.
+        /// </summary>
+        /// <value>
+        /// The zip code.
+        /// </value>
+        public string ZipCode { get; set; }
+        /// <summary>
+        /// Gets or sets the country.
+        /// </summary>
+        /// <value>
+        /// The country.
+        /// </value>
+        public string Country { get; set; }
     }
 }
