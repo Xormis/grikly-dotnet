@@ -248,5 +248,13 @@ namespace Grikly
         /// <returns></returns>
         Task<IHttpResponse> ResendConfirmation(string email, CancellationToken token);
         #endregion
+
+        /// <summary>
+        /// Gets the event by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        Task<IHttpResponse<EventModel>> GetEventById(Guid id, CancellationToken token);
     }
 }

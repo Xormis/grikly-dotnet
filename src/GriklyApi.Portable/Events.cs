@@ -34,5 +34,17 @@ namespace GriklyApi
                     },
                     token);
         }
+
+        /// <summary>
+        /// Gets the event by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public Task<IHttpResponse<EventModel>> GetEventById(Guid id, CancellationToken token)
+        {
+            string path = string.Format("v1/Events/{0}", id);
+            return this.Execute<EventModel>(new HttpRequestMessage(HttpMethod.Get, path), token);
+        }
     }
 }
