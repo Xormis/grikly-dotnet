@@ -1,4 +1,8 @@
-# Grikly Dot Net [![Build status](https://ci.appveyor.com/api/projects/status/esmclbge55jru4qc)](https://ci.appveyor.com/project/xormis/grikly-dotnet)
+[![NuGet](http://img.shields.io/nuget/v/Grikly.svg?style=flat-square)](https://www.nuget.org/packages/Grikly/)
+[![Downloads](http://img.shields.io/nuget/dt/Grikly.svg?style=flat-square)](https://www.nuget.org/packages/Grikly/)
+[![Build status](http://img.shields.io/appveyor/ci/xormis/grikly-dotnet.svg?style=flat-square)](https://ci.appveyor.com/project/xormis/grikly-dotnet)
+
+# Grikly Dot Net 
 
 ## NuGet
 
