@@ -256,5 +256,13 @@ namespace Grikly
         /// <param name="token">The token.</param>
         /// <returns></returns>
         Task<IHttpResponse<EventModel>> GetEventById(Guid id, CancellationToken token);
+
+        /// <summary>
+        /// Determines whether the currently logged in user has confirmed their email.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        Task<IHttpResponse<bool>> IsUserConfirmed(CancellationToken token);
     }
 }

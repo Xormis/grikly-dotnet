@@ -59,12 +59,12 @@ namespace GriklyApi
         /// <param name="useTestApi">
         /// Set to true if using the test API.
         /// </param>
-        public GriklyClient(string apiKey, bool useSsl = true, bool useTestApi = false)
+        public GriklyClient(string apiKey, bool useTestApi = false)
         {
             this.ApiKey = apiKey;
             this.useBetaUrl = useTestApi;
 
-            string baseUrl = this.useBetaUrl ? Configuration.BASE_BETA_URL : Configuration.BASE_URL;
+            string baseUrl = this.useBetaUrl ? Configuration.BASE_TEST_URL : Configuration.BASE_URL;
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
@@ -155,7 +155,7 @@ namespace GriklyApi
                 return new HttpResponse { IsError = true, Error = errorResponse, };
             }
         }
-        
+
 
         /// <summary>
         /// The execute.
@@ -176,7 +176,7 @@ namespace GriklyApi
         /// </returns>
         public async Task<IHttpResponse<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
         {
-            var originalResponse =  await this.Execute(request, token);
+            var originalResponse = await this.Execute(request, token);
             var response = new HttpResponse<T>(originalResponse);
             // if no error, deserialize the content to the generic data property
             if (!response.IsError)
@@ -239,7 +239,7 @@ namespace GriklyApi
         {
             if (disposing)
             {
-                
+
             }
         }
 

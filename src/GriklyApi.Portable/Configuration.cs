@@ -16,17 +16,16 @@ namespace Grikly
         #region Static Fields
 
         /// <summary>
-        /// The bas e_ bet a_ url.
+        /// The main test url
         /// </summary>
-        public static string BASE_BETA_URL = "http://api.grik.ly/";
-        //public static string BASE_BETA_URL = "http://localhost/api/";
+        public static string BASE_TEST_URL = "https://griklyapi-testing.azurewebsites.net/";
         /// <summary>
-        ///     The bas e_ secur e_ url.
+        ///     The main secured base Url
         /// </summary>
         public static string BASE_SECURE_URL = "https://griklyapi.azurewebsites.net/";
 
         /// <summary>
-        ///     The bas e_ url.
+        /// The main base Url
         /// </summary>
         public static string BASE_URL = "http://api.grik.ly/";
 
