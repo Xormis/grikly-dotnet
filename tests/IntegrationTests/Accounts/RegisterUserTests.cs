@@ -12,7 +12,7 @@ namespace Grikly.Tests.IntegrationTests.Accounts
 {
     public class RegisterUserTests : TestBase
     {
-        [Fact]
+        [Fact(Skip = "Not finalized")]
         public async Task Register_User_Returns_HttpStatus_Created_When_Successful()
         {
             var response = await Client.Register(new RegisterModel

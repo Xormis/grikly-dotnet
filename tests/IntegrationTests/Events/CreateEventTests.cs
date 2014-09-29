@@ -11,7 +11,7 @@ namespace Grikly.Tests.IntegrationTests.Events
 {
     public class CreateEventTests : TestBase
     {
-        [Fact]
+        [Fact(Skip = "not finialized")]
         public async Task Should_Return_Http_Status_Created_With_Id_When_Successful()
         {
             var model = new EventModel
