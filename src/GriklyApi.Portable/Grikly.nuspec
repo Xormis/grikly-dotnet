@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package>
   <metadata>
-    <id>$id$</id>
+    <id>Grikly</id>
     <version>$version$</version>
+    <title>Grikly</title>
     <authors>Shawn Mclean</authors>
     <owners>Xormis</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
