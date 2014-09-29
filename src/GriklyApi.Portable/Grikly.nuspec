@@ -4,7 +4,7 @@
     <id>$id$</id>
     <version>$version$</version>
     <authors>Shawn Mclean</authors>
-    <owners>$author$</owners>
+    <owners>Xormis</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/Xormis/grikly-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
