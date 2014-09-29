@@ -68,12 +68,15 @@
     <Compile Include="Events.cs" />
     <Compile Include="IGriklyClient.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
+    <Compile Include="Models\BaseCreateResponse.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="GriklyClient.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Contact.cs" />
-    <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\Events\CreateEventResponse.cs" />
+    <Compile Include="Models\Events\EventModel.cs" />
+    <Compile Include="Models\GriklyHttpResponseMessage.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PagedModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -94,8 +97,7 @@
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.IO">
       <HintPath>..\..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.IO.dll</HintPath>
@@ -118,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Grikly.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

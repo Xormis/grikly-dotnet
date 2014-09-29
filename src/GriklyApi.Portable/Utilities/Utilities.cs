@@ -55,7 +55,7 @@ namespace Grikly
         /// <summary>
         ///     Gets or sets the response callback.
         /// </summary>
-        public Action<IHttpResponse> ResponseCallback { get; set; }
+        public Action<GriklyHttpResponseMessage> ResponseCallback { get; set; }
 
         #endregion
     }

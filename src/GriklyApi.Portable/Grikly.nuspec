@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>Shawn Mclean</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/Xormis/grikly-dotnet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Grikly is an API wrapper to help developers getting started with the grikly api fast and easy.</description>
+    <tags>Grikly, Cards, Contact</tags>
+    <releaseNotes>
+      No feature yet.
+    </releaseNotes>
+  </metadata>
+</package>

@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using GriklyApi.Models.Events;
+
 namespace Grikly
 {
     using System;
@@ -41,7 +43,7 @@ namespace Grikly
         /// <param name="newPassword">The new password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> ChangePassword(string oldPassword, string newPassword, CancellationToken token);
+        Task<GriklyHttpResponseMessage> ChangePassword(string oldPassword, string newPassword, CancellationToken token);
         /// <summary>
         /// Logins the specified email.
         /// </summary>
@@ -49,7 +51,7 @@ namespace Grikly
         /// <param name="password">The password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse<AuthenticationModel>> Login(string email, string password, CancellationToken token);
+        Task<GriklyHttpResponseMessage<AuthenticationModel>> Login(string email, string password, CancellationToken token);
 
         /// <summary>
         /// Add the credentials of the user to make authenticated requests
@@ -70,7 +72,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<object>> CreateCard(Card card, CancellationToken token);
+        Task<GriklyHttpResponseMessage<object>> CreateCard(Card card, CancellationToken token);
 
         /// <summary>
         /// Creates the contact.
@@ -80,7 +82,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> CreateContact(Contact contact, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> CreateContact(Contact contact, CancellationToken token);
 
         /// <summary>
         /// Deletes the card.
@@ -90,7 +92,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> DeleteCard(Guid id, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> DeleteCard(Guid id, CancellationToken token);
 
         /// <summary>
         /// Deletes the contact.
@@ -100,7 +102,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> DeleteContact(Guid id, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> DeleteContact(Guid id, CancellationToken token);
 
         /// <summary>
         /// Emails the exist.
@@ -110,7 +112,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<bool>> EmailExist(string email, CancellationToken token);
+        Task<GriklyHttpResponseMessage<bool>> EmailExist(string email, CancellationToken token);
 
         /// <summary>
         /// Gets the card.
@@ -120,7 +122,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> GetCard(Guid id, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> GetCard(Guid id, CancellationToken token);
 
         /// <summary>
         /// The get contacts.
@@ -132,7 +134,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<PagingModel<Card>>> GetContacts(
+        Task<GriklyHttpResponseMessage<PagingModel<Card>>> GetContacts(
             string searchText,
             int page,
             int pageSize,
@@ -145,9 +147,9 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        //Task<IHttpResponse<User>> GetUser(Guid id, CancellationToken token);
+        //Task<GriklyHttpResponseMessage<User>> GetUser(Guid id, CancellationToken token);
 
-        Task<IHttpResponse<User>> GetCurrentUserInfo(CancellationToken token);
+        Task<GriklyHttpResponseMessage<User>> GetCurrentUserInfo(CancellationToken token);
 
         /// <summary>
         /// Registers the specified register.
@@ -157,7 +159,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse> Register(RegisterModel register, CancellationToken token);
+        Task<GriklyHttpResponseMessage> Register(RegisterModel register, CancellationToken token);
 
         /// <summary>
         /// Recovers the specified email.
@@ -165,7 +167,7 @@ namespace Grikly
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> Recover(string email, CancellationToken token);
+        Task<GriklyHttpResponseMessage> Recover(string email, CancellationToken token);
         /// <summary>
         /// Remove the credentials of the user for making authenticated requests
         /// </summary>
@@ -180,7 +182,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> SendCard(Guid id, SendCardModel model, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> SendCard(Guid id, SendCardModel model, CancellationToken token);
 
         /// <summary>
         /// Updates the card.
@@ -190,7 +192,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> UpdateCard(Card card, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> UpdateCard(Card card, CancellationToken token);
 
         /// <summary>
         /// Updates the contact.
@@ -200,7 +202,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<Card>> UpdateContact(Contact contact, CancellationToken token);
+        Task<GriklyHttpResponseMessage<Card>> UpdateContact(Contact contact, CancellationToken token);
 
         /// <summary>
         /// Uploads the profile image.
@@ -210,7 +212,7 @@ namespace Grikly
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        Task<IHttpResponse<string>> UploadProfileImage(byte[] data, CancellationToken token);
+        Task<GriklyHttpResponseMessage<string>> UploadProfileImage(byte[] data, CancellationToken token);
 
 
         /// <summary>
@@ -220,7 +222,7 @@ namespace Grikly
         /// <param name="code">The code.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> ConfirmEmail(string email, string code, CancellationToken token);
+        Task<GriklyHttpResponseMessage> ConfirmEmail(string email, string code, CancellationToken token);
         /// <summary>
         /// Resets the password.
         /// </summary>
@@ -230,7 +232,7 @@ namespace Grikly
         /// <param name="confirmPassword">The confirm password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token);
+        Task<GriklyHttpResponseMessage> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token);
 
         /// <summary>
         /// Creates the event.
@@ -238,7 +240,7 @@ namespace Grikly
         /// <param name="eventModel">The event model.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> CreateEvent(EventModel eventModel, CancellationToken token);
+        Task<GriklyHttpResponseMessage<CreateEventResponse>> CreateEvent(EventModel eventModel, CancellationToken token);
 
         /// <summary>
         /// Resends the confirmation.
@@ -246,7 +248,7 @@ namespace Grikly
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse> ResendConfirmation(string email, CancellationToken token);
+        Task<GriklyHttpResponseMessage> ResendConfirmation(string email, CancellationToken token);
         #endregion
 
         /// <summary>
@@ -255,7 +257,7 @@ namespace Grikly
         /// <param name="id">The identifier.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse<EventModel>> GetEventById(Guid id, CancellationToken token);
+        Task<GriklyHttpResponseMessage<EventModel>> GetEventById(Guid id, CancellationToken token);
 
         /// <summary>
         /// Determines whether the currently logged in user has confirmed their email.
@@ -263,6 +265,6 @@ namespace Grikly
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        Task<IHttpResponse<bool>> IsUserConfirmed(CancellationToken token);
+        Task<GriklyHttpResponseMessage<bool>> IsUserConfirmed(CancellationToken token);
     }
 }

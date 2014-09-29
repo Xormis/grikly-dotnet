@@ -39,7 +39,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> CreateContact(Contact contact, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> CreateContact(Contact contact, CancellationToken token)
         {
             string path = "v1/Contacts";
             return
@@ -62,7 +62,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> DeleteContact(Guid id, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> DeleteContact(Guid id, CancellationToken token)
         {
             string path = string.Format("v1/Contacts/{0}", id);
             return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Delete, path), token);
@@ -86,7 +86,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<PagingModel<Card>>> GetContacts(
+        public Task<GriklyHttpResponseMessage<PagingModel<Card>>> GetContacts(
             string searchText, 
             int page, 
             int pageSize, 
@@ -108,7 +108,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> UpdateContact(Contact contact, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> UpdateContact(Contact contact, CancellationToken token)
         {
             string path = string.Format("v1/Contacts/{0}", contact.CardId);
             return

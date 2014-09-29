@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GriklyApi.Models;
+using GriklyApi.Models.Events;
 using Newtonsoft.Json;
 
 namespace GriklyApi
@@ -19,11 +20,11 @@ namespace GriklyApi
         /// <param name="eventModel">The event model.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> CreateEvent(EventModel eventModel, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<CreateEventResponse>> CreateEvent(EventModel eventModel, CancellationToken token)
         {
             string path = "v1/Events";
             return
-                this.Execute(
+                this.Execute<CreateEventResponse>(
                     new HttpRequestMessage(HttpMethod.Post, path)
                     {
                         Content =
@@ -41,7 +42,7 @@ namespace GriklyApi
         /// <param name="id">The identifier.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse<EventModel>> GetEventById(Guid id, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<EventModel>> GetEventById(Guid id, CancellationToken token)
         {
             string path = string.Format("v1/Events/{0}", id);
             return this.Execute<EventModel>(new HttpRequestMessage(HttpMethod.Get, path), token);

@@ -40,7 +40,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<object>> CreateCard(Card card, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<object>> CreateCard(Card card, CancellationToken token)
         {
             string path = "v1/Cards";
             return
@@ -68,7 +68,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> DeleteCard(Guid id, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> DeleteCard(Guid id, CancellationToken token)
         {
             string path = string.Format("v1/Cards/{0}", id);
             return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Delete, path), token);
@@ -86,7 +86,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> GetCard(Guid id, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> GetCard(Guid id, CancellationToken token)
         {
             string path = string.Format("v1/Cards/{0}", id);
             return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Get, path), token);
@@ -107,7 +107,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> SendCard(Guid id, SendCardModel model, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> SendCard(Guid id, SendCardModel model, CancellationToken token)
         {
             string path = string.Format("v1/Cards/{0}/", id);
             return this.Execute<Card>(
@@ -126,7 +126,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<Card>> UpdateCard(Card card, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<Card>> UpdateCard(Card card, CancellationToken token)
         {
             string path = string.Format("v1/Cards/{0}", card.CardId);
             return

@@ -97,7 +97,61 @@ namespace GriklyApi
         {
             this.bearerToken = bearerToken;
         }
-        public async Task<IHttpResponse> Execute(HttpRequestMessage request, CancellationToken token)
+        //public async Task<GriklyHttpResponseMessage> Execute(HttpRequestMessage request, CancellationToken token)
+        //{
+        //    if (!string.IsNullOrEmpty(bearerToken))
+        //    {
+        //        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+        //    }
+
+        //    // add api key to header
+        //    request.Headers.Add("ApiKey", ApiKey);
+
+        //    var originalResponse = await client.SendAsync(request, token);
+
+        //    if (originalResponse.IsSuccessStatusCode)
+        //    {
+        //        var content = await originalResponse.Content.ReadAsByteArrayAsync();
+        //        var contentLocation = originalResponse.Headers.Location != null
+        //                                  ? originalResponse.Headers.Location.AbsoluteUri
+        //                                  : "";
+        //        var contentType = originalResponse.Content.Headers.ContentType != null
+        //                            ? originalResponse.Content.Headers.ContentType.MediaType
+        //                            : "";
+        //        var response = new HttpResponse
+        //                           {
+        //                               IsError = false,
+        //                               RawBytes = content,
+        //                               ContentLength = originalResponse.Content.Headers.ContentLength.Value,
+        //                               ContentType = contentType,
+        //                               Location = contentLocation
+        //                           };
+        //        return response;
+
+        //    }
+        //    else
+        //    {
+        //        var content = await originalResponse.Content.ReadAsStringAsync();
+
+        //        var errorMessage = new ErrorMessage
+        //                                            {
+        //                                                Message = "An error occurred with your request."
+        //                                            };
+
+        //        // try to deserialize the message
+        //        if (!string.IsNullOrEmpty(content)) errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(content);
+
+        //        var errorResponse = new ErrorResponse
+        //                                    {
+        //                                        HttpStatusCode = originalResponse.StatusCode,
+        //                                        ErrorMessage = errorMessage
+        //                                    };
+
+        //        return new HttpResponse { IsError = true, Error = errorResponse, };
+        //    }
+        //}
+
+        public async Task<GriklyHttpResponseMessage> Execute(HttpRequestMessage request, CancellationToken token)
         {
             if (!string.IsNullOrEmpty(bearerToken))
             {
@@ -107,53 +161,63 @@ namespace GriklyApi
             // add api key to header
             request.Headers.Add("ApiKey", ApiKey);
 
-            var originalResponse = await client.SendAsync(request, token);
+            var resp = await client.SendAsync(request, token);
+            var response = new GriklyHttpResponseMessage(resp);
 
-            if (originalResponse.IsSuccessStatusCode)
+            if (!response.Message.IsSuccessStatusCode)
             {
-                var content = await originalResponse.Content.ReadAsByteArrayAsync();
-                var createdContentId = originalResponse.Headers.Contains("CreatedContentId")
-                                           ? originalResponse.Headers.GetValues("CreatedContentId")
-                                                 .FirstOrDefault()
-                                           : "";
-                var contentLocation = originalResponse.Headers.Location != null
-                                          ? originalResponse.Headers.Location.AbsoluteUri
-                                          : "";
-                var contentType = originalResponse.Content.Headers.ContentType != null
-                                    ? originalResponse.Content.Headers.ContentType.MediaType
-                                    : "";
-                var response = new HttpResponse
-                                   {
-                                       IsError = false,
-                                       RawBytes = content,
-                                       ContentLength = originalResponse.Content.Headers.ContentLength.Value,
-                                       ContentType = contentType,
-                                       Location = contentLocation,
-                                       CreatedContentId = createdContentId
-                                   };
-                return response;
-
-            }
-            else
-            {
-                var content = await originalResponse.Content.ReadAsStringAsync();
+                var content = await response.Message.Content.ReadAsStringAsync();
 
                 var errorMessage = new ErrorMessage
-                                                    {
-                                                        Message = "An error occurred with your request."
-                                                    };
-
+                {
+                    Message = "An error occurred with your request."
+                };
                 // try to deserialize the message
-                if (!string.IsNullOrEmpty(content)) errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(content);
+                if (!string.IsNullOrEmpty(content))
+                    errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(content);
 
                 var errorResponse = new ErrorResponse
-                                            {
-                                                HttpStatusCode = originalResponse.StatusCode,
-                                                ErrorMessage = errorMessage
-                                            };
-
-                return new HttpResponse { IsError = true, Error = errorResponse, };
+                {
+                    HttpStatusCode = response.Message.StatusCode,
+                    ErrorMessage = errorMessage
+                };
+                response.Error = errorResponse;
             }
+
+            return response;
+        }
+
+        public async Task<GriklyHttpResponseMessage<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
+        {
+            var resp = await Execute(request, token);
+            var response = new GriklyHttpResponseMessage<T>(resp.Message)
+            {
+                Error = resp.Error
+            };
+
+            if (response.Message.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Message.Content.ReadAsStringAsync();
+                    // try to deserialize the message
+                    if (!string.IsNullOrEmpty(content))
+                        response.SerializedContent = JsonConvert.DeserializeObject<T>(content);
+                }
+                catch (Exception ex)
+                {
+                    response.Error = new ErrorResponse
+                    {
+                        ErrorMessage =
+                            new ErrorMessage
+                            {
+                                Message = "Error Serializing content",
+                                ExceptionMessage = ex.Message
+                            }
+                    };
+                }
+            }
+            return response;
         }
 
 
@@ -174,48 +238,48 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IHttpResponse<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
-        {
-            var originalResponse = await this.Execute(request, token);
-            var response = new HttpResponse<T>(originalResponse);
-            // if no error, deserialize the content to the generic data property
-            if (!response.IsError)
-            {
-                try
-                {
-                    string data = Encoding.UTF8.GetString(response.RawBytes, 0, response.RawBytes.Length);
-                    var objData = JsonConvert.DeserializeObject<T>(data);
-                    response.Data = objData;
-                }
-                catch (FormatException fex)
-                {
-                    response.IsError = true;
-                    response.Error = new ErrorResponse
-                                    {
-                                        ErrorMessage =
-                                            new ErrorMessage
-                                                {
-                                                    Message = "Error with Server",
-                                                    ExceptionMessage = fex.Message
-                                                }
-                                    };
-                }
-                catch (Exception ex)
-                {
-                    response.IsError = true;
-                    response.Error = new ErrorResponse
-                                    {
-                                        ErrorMessage =
-                                            new ErrorMessage
-                                                {
-                                                    Message = "Internal Exception Occured",
-                                                    ExceptionMessage = ex.Message
-                                                }
-                                    };
-                }
-            }
-            return response;
-        }
+        //public async Task<GriklyHttpResponseMessage<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
+        //{
+        //    var originalResponse = await this.Execute(request, token);
+        //    var response = new HttpResponse<T>(originalResponse);
+        //    // if no error, deserialize the content to the generic data property
+        //    if (!response.IsError)
+        //    {
+        //        try
+        //        {
+        //            string data = Encoding.UTF8.GetString(response.RawBytes, 0, response.RawBytes.Length);
+        //            var objData = JsonConvert.DeserializeObject<T>(data);
+        //            response.Data = objData;
+        //        }
+        //        catch (FormatException fex)
+        //        {
+        //            response.IsError = true;
+        //            response.Error = new ErrorResponse
+        //                            {
+        //                                ErrorMessage =
+        //                                    new ErrorMessage
+        //                                        {
+        //                                            Message = "Error with Server",
+        //                                            ExceptionMessage = fex.Message
+        //                                        }
+        //                            };
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            response.IsError = true;
+        //            response.Error = new ErrorResponse
+        //                            {
+        //                                ErrorMessage =
+        //                                    new ErrorMessage
+        //                                        {
+        //                                            Message = "Internal Exception Occured",
+        //                                            ExceptionMessage = ex.Message
+        //                                        }
+        //                            };
+        //        }
+        //    }
+        //    return response;
+        //}
 
 
         /// <summary>

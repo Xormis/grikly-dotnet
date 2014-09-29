@@ -17,11 +17,7 @@ before_build: nuget restore
 
 build:
   project: Grikly.sln
-
-after_test:
-  - ps: .\deployment\package.ps1
+  publish_nuget: true  
 
 artifacts:
-  - path: src\GriklyApi.Portable\bin\Release\GriklyApi.dll
-    name: GriklyApi.dll
-  - path: '**\Grikly*.nupkg'
+  - path: 'out\*.nupkg'

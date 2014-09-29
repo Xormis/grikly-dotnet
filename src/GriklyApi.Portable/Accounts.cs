@@ -36,7 +36,7 @@ namespace GriklyApi
         /// <param name="password">The password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse<AuthenticationModel>> Login(string email, string password, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<AuthenticationModel>> Login(string email, string password, CancellationToken token)
         {
             string path = "Token";
             return
@@ -64,7 +64,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        public Task<IHttpResponse<bool>> EmailExist(string email, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<bool>> EmailExist(string email, CancellationToken token)
         {
             string path = string.Format("v1/Account/EmailExist?Email={0}", email);
             return this.Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
@@ -76,7 +76,7 @@ namespace GriklyApi
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse<bool>> IsUserConfirmed(CancellationToken token)
+        public Task<GriklyHttpResponseMessage<bool>> IsUserConfirmed(CancellationToken token)
         {
             string path = "v1/Account/IsUserConfirmed";
             return this.Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
@@ -89,7 +89,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        public Task<IHttpResponse<User>> GetCurrentUserInfo(CancellationToken token)
+        public Task<GriklyHttpResponseMessage<User>> GetCurrentUserInfo(CancellationToken token)
         {
             string path = "v1/Account/UserInfo";
             return
@@ -104,7 +104,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        public Task<IHttpResponse> Register(RegisterModel register, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> Register(RegisterModel register, CancellationToken token)
         {
             string path = "v1/Account/Register";
             return this.Execute(new HttpRequestMessage(HttpMethod.Post, path)
@@ -119,7 +119,7 @@ namespace GriklyApi
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> ResendConfirmation(string email, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> ResendConfirmation(string email, CancellationToken token)
         {
             string path = "v1/Account/ResendConfirmation";
             return this.Execute(new HttpRequestMessage(HttpMethod.Post, path)
@@ -135,7 +135,7 @@ namespace GriklyApi
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> Recover(string email, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> Recover(string email, CancellationToken token)
         {
             string path = "v1/Account/Recover";
             return
@@ -159,7 +159,7 @@ namespace GriklyApi
         /// <param name="newPassword">The new password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> ChangePassword(string oldPassword, string newPassword, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> ChangePassword(string oldPassword, string newPassword, CancellationToken token)
         {
             string path = "v1/Account/ChangePassword";
             return
@@ -183,7 +183,7 @@ namespace GriklyApi
         /// <param name="code">The code.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> ConfirmEmail(string email, string code, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> ConfirmEmail(string email, string code, CancellationToken token)
         {
             string path = "v1/Account/ConfirmEmail";
             return
@@ -208,7 +208,7 @@ namespace GriklyApi
         /// <param name="confirmPassword">The confirm password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<IHttpResponse> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token)
         {
             string path = "v1/Account/ResetPassword";
             return
@@ -232,7 +232,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task" />.
         /// </returns>
-        public Task<IHttpResponse<string>> UploadProfileImage(
+        public Task<GriklyHttpResponseMessage<string>> UploadProfileImage(
             byte[] data,
             CancellationToken token)
         {

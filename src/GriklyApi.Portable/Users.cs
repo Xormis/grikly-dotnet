@@ -37,7 +37,7 @@ namespace GriklyApi
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<IHttpResponse<User>> GetUser(Guid id, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<User>> GetUser(Guid id, CancellationToken token)
         {
             string path = string.Format("Users/{0}", id);
             return this.Execute<User>(new HttpRequestMessage(HttpMethod.Get, path ), token);
