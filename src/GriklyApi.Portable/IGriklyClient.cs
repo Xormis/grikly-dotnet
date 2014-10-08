@@ -266,5 +266,14 @@ namespace Grikly
         /// <param name="token">The token.</param>
         /// <returns></returns>
         Task<GriklyHttpResponseMessage<bool>> IsUserConfirmed(CancellationToken token);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<GriklyHttpResponseMessage<PagingModel<EventModel>>> GetOwnedEvents(GetEventsRequest request,
+            CancellationToken token);
     }
 }

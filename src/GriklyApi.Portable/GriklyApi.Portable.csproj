@@ -66,9 +66,12 @@
     <Compile Include="Contacts.cs" />
     <Compile Include="Converters\ErrorConverter.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="Helpers\UrlHelpers.cs" />
     <Compile Include="IGriklyClient.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\BaseCreateResponse.cs" />
+    <Compile Include="Models\Events\GetEventsRequest.cs" />
+    <Compile Include="Models\PagedModelRequest.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="GriklyClient.cs" />

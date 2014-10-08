@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\Accounts\RegisterUserTests.cs" />
     <Compile Include="IntegrationTests\Events\CreateEventTests.cs" />
+    <Compile Include="IntegrationTests\Events\OwnedEventTests.cs" />
     <Compile Include="IntegrationTests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

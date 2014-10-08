@@ -39,10 +39,6 @@ namespace GriklyApi
 
         private readonly HttpClient client;
 
-        /// <summary>
-        /// The use beta url.
-        /// </summary>
-        private bool useBetaUrl;
 
         #endregion
 
@@ -62,9 +58,8 @@ namespace GriklyApi
         public GriklyClient(string apiKey, bool useTestApi = false)
         {
             this.ApiKey = apiKey;
-            this.useBetaUrl = useTestApi;
 
-            string baseUrl = this.useBetaUrl ? Configuration.BASE_TEST_URL : Configuration.BASE_URL;
+            string baseUrl = useTestApi ? Configuration.BASE_TEST_URL : Configuration.BASE_URL;
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
