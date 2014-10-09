@@ -10,7 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3112DAD-62E1-43EB-A4CC-4FA810592088}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
-		AssemblyInfo.cs = AssemblyInfo.cs
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
@@ -24,12 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{663F0A
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment", "deployment", "{798CB463-A001-4806-BEA6-1C347DFEB64B}"
-	ProjectSection(SolutionItems) = preProject
-		deployment\Grikly.nuspec = deployment\Grikly.nuspec
-		deployment\package.ps1 = deployment\package.ps1
 	EndProjectSection
 EndProject
 Global
