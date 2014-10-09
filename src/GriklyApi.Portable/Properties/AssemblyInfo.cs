@@ -14,11 +14,11 @@ using System.Resources;
 // associated with an assembly.
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyTitle("GriklyApi")]
+[assembly: AssemblyTitle("Grikly")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GriklyApi")]
+[assembly: AssemblyProduct("Grikly")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
