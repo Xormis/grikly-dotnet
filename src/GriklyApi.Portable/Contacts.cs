@@ -6,20 +6,18 @@
 //   The grikly api.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Grikly;
+using GriklyApi.Models;
+using Newtonsoft.Json;
+
 namespace GriklyApi
 {
-    using System;
-    using System.Net.Http;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using Grikly;
-
-    using GriklyApi.Models;
-
-    using Newtonsoft.Json;
-
     /// <summary>
     ///     The grikly api.
     /// </summary>
@@ -28,99 +26,100 @@ namespace GriklyApi
         #region Public Methods and Operators
 
         /// <summary>
-        /// Creates the contact.
+        ///     Creates the contact.
         /// </summary>
         /// <param name="contact">
-        /// The contact.
+        ///     The contact.
         /// </param>
         /// <param name="token">
-        /// The token.
+        ///     The token.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<Card>> CreateContact(Contact contact, CancellationToken token)
         {
             string path = "v1/Contacts";
             return
-                this.Execute<Card>(
-                    new HttpRequestMessage(HttpMethod.Post, path) 
-                        {
-                            Content = new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8,"application/json"), 
-                        }, token);
+                Execute<Card>(
+                    new HttpRequestMessage(HttpMethod.Post, path)
+                    {
+                        Content =
+                            new StringContent(JsonConvert.SerializeObject(contact), Encoding.UTF8, "application/json"),
+                    }, token);
         }
 
         /// <summary>
-        /// Deletes the contact.
+        ///     Deletes the contact.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <param name="token">
-        /// The token.
+        ///     The token.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<Card>> DeleteContact(Guid id, CancellationToken token)
         {
             string path = string.Format("v1/Contacts/{0}", id);
-            return this.Execute<Card>(new HttpRequestMessage(HttpMethod.Delete, path), token);
+            return Execute<Card>(new HttpRequestMessage(HttpMethod.Delete, path), token);
         }
 
         /// <summary>
-        /// The get contacts.
+        ///     The get contacts.
         /// </summary>
         /// <param name="searchText">
-        /// The search text.
+        ///     The search text.
         /// </param>
         /// <param name="page">
-        /// The page.
+        ///     The page.
         /// </param>
         /// <param name="pageSize">
-        /// The page size.
+        ///     The page size.
         /// </param>
         /// <param name="token">
-        /// The token.
+        ///     The token.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<PagingModel<Card>>> GetContacts(
-            string searchText, 
-            int page, 
-            int pageSize, 
+            string searchText,
+            int page,
+            int pageSize,
             CancellationToken token)
         {
             string path = string.Format("v1/Contacts?SearchText={0}&Page={1}&PageSize={2}", searchText, page, pageSize);
-            return this.Execute<PagingModel<Card>>(new HttpRequestMessage(HttpMethod.Get, path), token);
+            return Execute<PagingModel<Card>>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
 
         /// <summary>
-        /// Updates the contact.
+        ///     Updates the contact.
         /// </summary>
         /// <param name="contact">
-        /// The contact.
+        ///     The contact.
         /// </param>
         /// <param name="token">
-        /// The token.
+        ///     The token.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<Card>> UpdateContact(Contact contact, CancellationToken token)
         {
             string path = string.Format("v1/Contacts/{0}", contact.CardId);
             return
-                this.Execute<Card>(
+                Execute<Card>(
                     new HttpRequestMessage(HttpMethod.Put, path)
-                        {
-                            Content =
-                                new StringContent(
+                    {
+                        Content =
+                            new StringContent(
                                 JsonConvert.SerializeObject(contact),
                                 Encoding.UTF8,
                                 "application/json"),
-                        },
+                    },
                     token);
         }
 

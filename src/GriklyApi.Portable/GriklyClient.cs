@@ -6,46 +6,38 @@
 //   Grik.ly API wrapper that contains REST API calls.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using Grikly;
+using GriklyApi.Models;
+using Newtonsoft.Json;
+
 namespace GriklyApi
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using GriklyApi.Models;
-
-    using Grikly;
-
-    using Newtonsoft.Json;
-
     /// <summary>
     ///     Grik.ly API wrapper that contains REST API calls.
     /// </summary>
     public partial class GriklyClient : IGriklyClient
     {
-        // intention is to remove usernames and password requirements in version 2 (using OAUTH)
         #region Fields
+
+        private readonly HttpClient client;
 
         /// <summary>
         ///     The _email of the user to make authenticated requests
         /// </summary>
         private string bearerToken;
 
-        private readonly HttpClient client;
-
-
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GriklyClient"/> class.
+        ///     Initializes a new instance of the <see cref="GriklyClient" /> class.
         ///     Create an instance of the Grik.ly API client.
         /// </summary>
         /// <param name="apiKey">
@@ -53,17 +45,16 @@ namespace GriklyApi
         /// <param name="useSsl">
         /// </param>
         /// <param name="useTestApi">
-        /// Set to true if using the test API.
+        ///     Set to true if using the test API.
         /// </param>
         public GriklyClient(string apiKey, bool useTestApi = false)
         {
-            this.ApiKey = apiKey;
+            ApiKey = apiKey;
 
             string baseUrl = useTestApi ? Configuration.BASE_TEST_URL : Configuration.BASE_URL;
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
-
         }
 
         #endregion
@@ -80,18 +71,86 @@ namespace GriklyApi
         #region Public Methods and Operators
 
         /// <summary>
-        /// Add the credentials of the user to make authenticated requests
+        ///     Add the credentials of the user to make authenticated requests
         /// </summary>
         /// <param name="email">
-        /// the email
+        ///     the email
         /// </param>
         /// <param name="password">
-        /// the password
+        ///     the password
         /// </param>
         public void AddCredentials(string bearerToken)
         {
             this.bearerToken = bearerToken;
         }
+
+        //public async Task<GriklyHttpResponseMessage<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
+        //{
+        //    var originalResponse = await this.Execute(request, token);
+        //    var response = new HttpResponse<T>(originalResponse);
+        //    // if no error, deserialize the content to the generic data property
+        //    if (!response.IsError)
+        //    {
+        //        try
+        //        {
+        //            string data = Encoding.UTF8.GetString(response.RawBytes, 0, response.RawBytes.Length);
+        //            var objData = JsonConvert.DeserializeObject<T>(data);
+        //            response.Data = objData;
+        //        }
+        //        catch (FormatException fex)
+        //        {
+        //            response.IsError = true;
+        //            response.Error = new ErrorResponse
+        //                            {
+        //                                ErrorMessage =
+        //                                    new ErrorMessage
+        //                                        {
+        //                                            Message = "Error with Server",
+        //                                            ExceptionMessage = fex.Message
+        //                                        }
+        //                            };
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            response.IsError = true;
+        //            response.Error = new ErrorResponse
+        //                            {
+        //                                ErrorMessage =
+        //                                    new ErrorMessage
+        //                                        {
+        //                                            Message = "Internal Exception Occured",
+        //                                            ExceptionMessage = ex.Message
+        //                                        }
+        //                            };
+        //        }
+        //    }
+        //    return response;
+        //}
+        /// <summary>
+        ///     The execute.
+        /// </summary>
+        /// <param name="request">
+        ///     The request.
+        /// </param>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="token">
+        ///     The token.
+        /// </param>
+        /// <typeparam name="T">
+        /// </typeparam>
+        /// <returns>
+        ///     The <see cref="Task" />.
+        /// </returns>
+        /// <summary>
+        ///     Remove the credentials of the user for making authenticated requests
+        /// </summary>
+        public void RemoveCredentials()
+        {
+            bearerToken = string.Empty;
+        }
+
         //public async Task<GriklyHttpResponseMessage> Execute(HttpRequestMessage request, CancellationToken token)
         //{
         //    if (!string.IsNullOrEmpty(bearerToken))
@@ -156,12 +215,12 @@ namespace GriklyApi
             // add api key to header
             request.Headers.Add("ApiKey", ApiKey);
 
-            var resp = await client.SendAsync(request, token);
+            HttpResponseMessage resp = await client.SendAsync(request, token);
             var response = new GriklyHttpResponseMessage(resp);
 
             if (!response.Message.IsSuccessStatusCode)
             {
-                var content = await response.Message.Content.ReadAsStringAsync();
+                string content = await response.Message.Content.ReadAsStringAsync();
 
                 var errorMessage = new ErrorMessage
                 {
@@ -171,12 +230,7 @@ namespace GriklyApi
                 if (!string.IsNullOrEmpty(content))
                     errorMessage = JsonConvert.DeserializeObject<ErrorMessage>(content);
 
-                var errorResponse = new ErrorResponse
-                {
-                    HttpStatusCode = response.Message.StatusCode,
-                    ErrorMessage = errorMessage
-                };
-                response.Error = errorResponse;
+                response.ErrorMessage = errorMessage;
             }
 
             return response;
@@ -184,109 +238,37 @@ namespace GriklyApi
 
         public async Task<GriklyHttpResponseMessage<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
         {
-            var resp = await Execute(request, token);
+            GriklyHttpResponseMessage resp = await Execute(request, token);
             var response = new GriklyHttpResponseMessage<T>(resp.Message)
             {
-                Error = resp.Error
+                ErrorMessage = resp.ErrorMessage
             };
 
             if (response.Message.IsSuccessStatusCode)
             {
                 try
                 {
-                    var content = await response.Message.Content.ReadAsStringAsync();
+                    string content = await response.Message.Content.ReadAsStringAsync();
                     // try to deserialize the message
                     if (!string.IsNullOrEmpty(content))
                         response.SerializedContent = JsonConvert.DeserializeObject<T>(content);
                 }
                 catch (Exception ex)
                 {
-                    response.Error = new ErrorResponse
-                    {
-                        ErrorMessage =
-                            new ErrorMessage
-                            {
-                                Message = "Error Serializing content",
-                                ExceptionMessage = ex.Message
-                            }
-                    };
+                    response.ErrorMessage =
+                        new ErrorMessage
+                        {
+                            Message = "Error Serializing content",
+                            ExceptionMessage = ex.Message
+                        };
                 }
             }
             return response;
         }
 
-
-        /// <summary>
-        /// The execute.
-        /// </summary>
-        /// <param name="request">
-        /// The request.
-        /// </param>
-        /// <param name="path">
-        /// The path.
-        /// </param>
-        /// <param name="token">
-        /// The token.
-        /// </param>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        //public async Task<GriklyHttpResponseMessage<T>> Execute<T>(HttpRequestMessage request, CancellationToken token)
-        //{
-        //    var originalResponse = await this.Execute(request, token);
-        //    var response = new HttpResponse<T>(originalResponse);
-        //    // if no error, deserialize the content to the generic data property
-        //    if (!response.IsError)
-        //    {
-        //        try
-        //        {
-        //            string data = Encoding.UTF8.GetString(response.RawBytes, 0, response.RawBytes.Length);
-        //            var objData = JsonConvert.DeserializeObject<T>(data);
-        //            response.Data = objData;
-        //        }
-        //        catch (FormatException fex)
-        //        {
-        //            response.IsError = true;
-        //            response.Error = new ErrorResponse
-        //                            {
-        //                                ErrorMessage =
-        //                                    new ErrorMessage
-        //                                        {
-        //                                            Message = "Error with Server",
-        //                                            ExceptionMessage = fex.Message
-        //                                        }
-        //                            };
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            response.IsError = true;
-        //            response.Error = new ErrorResponse
-        //                            {
-        //                                ErrorMessage =
-        //                                    new ErrorMessage
-        //                                        {
-        //                                            Message = "Internal Exception Occured",
-        //                                            ExceptionMessage = ex.Message
-        //                                        }
-        //                            };
-        //        }
-        //    }
-        //    return response;
-        //}
-
-
-        /// <summary>
-        ///     Remove the credentials of the user for making authenticated requests
-        /// </summary>
-        public void RemoveCredentials()
-        {
-            bearerToken = string.Empty;
-        }
-
         #endregion
 
+        // intention is to remove usernames and password requirements in version 2 (using OAUTH)
 
         public void Dispose()
         {
@@ -298,9 +280,7 @@ namespace GriklyApi
         {
             if (disposing)
             {
-
             }
         }
-
     }
 }

@@ -6,18 +6,16 @@
 //   The grikly api.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Grikly;
+using GriklyApi.Models;
+
 namespace GriklyApi
 {
-    using System;
-    using System.IO;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using GriklyApi.Models;
-
-    using Grikly;
-
     /// <summary>
     ///     The grikly api.
     /// </summary>
@@ -26,23 +24,22 @@ namespace GriklyApi
         #region Public Methods and Operators
 
         /// <summary>
-        /// Gets the user.
+        ///     Gets the user.
         /// </summary>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <param name="token">
-        /// The token.
+        ///     The token.
         /// </param>
         /// <returns>
-        /// The <see cref="Task"/>.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<User>> GetUser(Guid id, CancellationToken token)
         {
             string path = string.Format("Users/{0}", id);
-            return this.Execute<User>(new HttpRequestMessage(HttpMethod.Get, path ), token);
+            return Execute<User>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
-
 
         #endregion
     }

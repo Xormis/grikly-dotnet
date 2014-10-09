@@ -5,7 +5,7 @@ namespace GriklyApi.Models
     public class GriklyHttpResponseMessage<T> : GriklyHttpResponseMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Net.Http.HttpResponseMessage"/> class.
+        ///     Initializes a new instance of the <see cref="T:System.Net.Http.HttpResponseMessage" /> class.
         /// </summary>
         public GriklyHttpResponseMessage(HttpResponseMessage message)
             : base(message)
@@ -18,7 +18,7 @@ namespace GriklyApi.Models
     public class GriklyHttpResponseMessage
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Net.Http.HttpResponseMessage"/> class.
+        ///     Initializes a new instance of the <see cref="T:System.Net.Http.HttpResponseMessage" /> class.
         /// </summary>
         public GriklyHttpResponseMessage(HttpResponseMessage message)
         {
@@ -28,7 +28,7 @@ namespace GriklyApi.Models
         /// <summary>
         ///     Gets or sets the error.
         /// </summary>
-        public ErrorResponse Error { get; set; }
+        public ErrorMessage ErrorMessage { get; set; }
 
         public HttpResponseMessage Message { get; set; }
     }

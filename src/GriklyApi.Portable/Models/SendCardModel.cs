@@ -6,10 +6,11 @@
 //   The send card model.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
+
 namespace GriklyApi.Models
 {
-    using System.Collections.Generic;
-
     /// <summary>
     ///     The send card model.
     /// </summary>

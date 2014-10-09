@@ -1,5 +1,4 @@
-﻿
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Configuration.cs" company="">
 //   
 // </copyright>
@@ -7,6 +6,7 @@
 //   The configuration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Grikly
 {
     /// <summary>
@@ -17,16 +17,17 @@ namespace Grikly
         #region Static Fields
 
         /// <summary>
-        /// The main test url
+        ///     The main test url
         /// </summary>
         public static string BASE_TEST_URL = "https://griklyapi-testing.azurewebsites.net/";
+
         /// <summary>
         ///     The main secured base Url
         /// </summary>
         public static string BASE_SECURE_URL = "https://griklyapi.azurewebsites.net/";
 
         /// <summary>
-        /// The main base Url
+        ///     The main base Url
         /// </summary>
         public static string BASE_URL = "http://api.grik.ly/";
 

@@ -6,10 +6,11 @@
 //   The user.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace GriklyApi.Models
 {
-    using System;
-
     /// <summary>
     ///     The user.
     /// </summary>

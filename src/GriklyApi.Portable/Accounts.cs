@@ -6,49 +6,50 @@
 //   The grikly api.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Grikly;
+using GriklyApi.Models;
+using Newtonsoft.Json;
+
 namespace GriklyApi
 {
-    using System;
-    using System.IO;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using GriklyApi.Models;
-
-    using Grikly;
-
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// The grikly api.
+    ///     The grikly api.
     /// </summary>
     public partial class GriklyClient : IGriklyClient
     {
         #region Public Methods and Operators
 
         /// <summary>
-        /// Logins the specified email.
+        ///     Logins the specified email.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<GriklyHttpResponseMessage<AuthenticationModel>> Login(string email, string password, CancellationToken token)
+        public Task<GriklyHttpResponseMessage<AuthenticationModel>> Login(string email, string password,
+            CancellationToken token)
         {
             string path = "Token";
             return
-                this.Execute<AuthenticationModel>(
+                Execute<AuthenticationModel>(
                     new HttpRequestMessage(HttpMethod.Post, path)
                     {
-                        Content = new StringContent(string.Format("grant_type=password&username={0}&password={1}", email, password), Encoding.UTF8, "application/x-www-form-urlencoded")
+                        Content =
+                            new StringContent(
+                                string.Format("grant_type=password&username={0}&password={1}", email, password),
+                                Encoding.UTF8, "application/x-www-form-urlencoded")
                     }, token);
         }
 
         /// <summary>
-        /// Determines whether [is credentials set].
+        ///     Determines whether [is credentials set].
         /// </summary>
         /// <returns></returns>
         public bool IsCredentialsSet()
@@ -57,21 +58,21 @@ namespace GriklyApi
         }
 
         /// <summary>
-        /// Emails the exist.
+        ///     Emails the exist.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// The <see cref="Task" />.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<bool>> EmailExist(string email, CancellationToken token)
         {
             string path = string.Format("v1/Account/EmailExist?Email={0}", email);
-            return this.Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
+            return Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
 
         /// <summary>
-        /// Determines whether the currently logged in user has confirmed their email.
+        ///     Determines whether the currently logged in user has confirmed their email.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
@@ -79,42 +80,42 @@ namespace GriklyApi
         public Task<GriklyHttpResponseMessage<bool>> IsUserConfirmed(CancellationToken token)
         {
             string path = "v1/Account/IsUserConfirmed";
-            return this.Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
+            return Execute<bool>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
 
         /// <summary>
-        /// Get the currently logged in user.
+        ///     Get the currently logged in user.
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// The <see cref="Task" />.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<User>> GetCurrentUserInfo(CancellationToken token)
         {
             string path = "v1/Account/UserInfo";
             return
-                this.Execute<User>(new HttpRequestMessage(HttpMethod.Get, path), token);
+                Execute<User>(new HttpRequestMessage(HttpMethod.Get, path), token);
         }
 
         /// <summary>
-        /// Registers the specified register.
+        ///     Registers the specified register.
         /// </summary>
         /// <param name="register">The register.</param>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// The <see cref="Task" />.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage> Register(RegisterModel register, CancellationToken token)
         {
             string path = "v1/Account/Register";
-            return this.Execute(new HttpRequestMessage(HttpMethod.Post, path)
-                                    {
-                                        Content = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json")
-                                    }, token);
+            return Execute(new HttpRequestMessage(HttpMethod.Post, path)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json")
+            }, token);
         }
 
         /// <summary>
-        /// Resends the confirmation.
+        ///     Resends the confirmation.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
@@ -122,15 +123,17 @@ namespace GriklyApi
         public Task<GriklyHttpResponseMessage> ResendConfirmation(string email, CancellationToken token)
         {
             string path = "v1/Account/ResendConfirmation";
-            return this.Execute(new HttpRequestMessage(HttpMethod.Post, path)
+            return Execute(new HttpRequestMessage(HttpMethod.Post, path)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new { Email = email }), Encoding.UTF8, "application/json")
+                Content =
+                    new StringContent(JsonConvert.SerializeObject(new {Email = email}), Encoding.UTF8,
+                        "application/json")
             }, token);
         }
 
 
         /// <summary>
-        /// Recovers the specified email.
+        ///     Recovers the specified email.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="token">The token.</param>
@@ -139,45 +142,46 @@ namespace GriklyApi
         {
             string path = "v1/Account/Recover";
             return
-                this.Execute(
-                    new HttpRequestMessage(HttpMethod.Post, path)
-                        {
-                            Content =
-                                new StringContent(
-                                JsonConvert.SerializeObject(
-                                    new { Email = email }),
-                                Encoding.UTF8,
-                                "application/json")
-                        },
-                    token);
-        }
-
-        /// <summary>
-        /// Changes the password.
-        /// </summary>
-        /// <param name="oldPassword">The old password.</param>
-        /// <param name="newPassword">The new password.</param>
-        /// <param name="token">The token.</param>
-        /// <returns></returns>
-        public Task<GriklyHttpResponseMessage> ChangePassword(string oldPassword, string newPassword, CancellationToken token)
-        {
-            string path = "v1/Account/ChangePassword";
-            return
-                this.Execute(
+                Execute(
                     new HttpRequestMessage(HttpMethod.Post, path)
                     {
                         Content =
                             new StringContent(
-                            JsonConvert.SerializeObject(
-                                new { OldPassword = oldPassword, NewPassword = newPassword }),
-                            Encoding.UTF8,
-                            "application/json")
+                                JsonConvert.SerializeObject(
+                                    new {Email = email}),
+                                Encoding.UTF8,
+                                "application/json")
                     },
                     token);
         }
 
         /// <summary>
-        /// Confirms the specified email.
+        ///     Changes the password.
+        /// </summary>
+        /// <param name="oldPassword">The old password.</param>
+        /// <param name="newPassword">The new password.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public Task<GriklyHttpResponseMessage> ChangePassword(string oldPassword, string newPassword,
+            CancellationToken token)
+        {
+            string path = "v1/Account/ChangePassword";
+            return
+                Execute(
+                    new HttpRequestMessage(HttpMethod.Post, path)
+                    {
+                        Content =
+                            new StringContent(
+                                JsonConvert.SerializeObject(
+                                    new {OldPassword = oldPassword, NewPassword = newPassword}),
+                                Encoding.UTF8,
+                                "application/json")
+                    },
+                    token);
+        }
+
+        /// <summary>
+        ///     Confirms the specified email.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="code">The code.</param>
@@ -187,20 +191,21 @@ namespace GriklyApi
         {
             string path = "v1/Account/ConfirmEmail";
             return
-                this.Execute(
+                Execute(
                     new HttpRequestMessage(HttpMethod.Post, path)
                     {
                         Content =
                             new StringContent(
-                            JsonConvert.SerializeObject(
-                                new { Email = email, Code = code }),
-                            Encoding.UTF8,
-                            "application/json")
+                                JsonConvert.SerializeObject(
+                                    new {Email = email, Code = code}),
+                                Encoding.UTF8,
+                                "application/json")
                     },
                     token);
         }
+
         /// <summary>
-        /// Resets the password.
+        ///     Resets the password.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="code">The code.</param>
@@ -208,29 +213,37 @@ namespace GriklyApi
         /// <param name="confirmPassword">The confirm password.</param>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public Task<GriklyHttpResponseMessage> ResetPassword(string email, string code, string password, string confirmPassword, CancellationToken token)
+        public Task<GriklyHttpResponseMessage> ResetPassword(string email, string code, string password,
+            string confirmPassword, CancellationToken token)
         {
             string path = "v1/Account/ResetPassword";
             return
-                this.Execute(
+                Execute(
                     new HttpRequestMessage(HttpMethod.Post, path)
                     {
                         Content =
                             new StringContent(
-                            JsonConvert.SerializeObject(
-                                new { Email = email, Code = code, Password = password, ConfirmPassword = confirmPassword }),
-                            Encoding.UTF8,
-                            "application/json")
+                                JsonConvert.SerializeObject(
+                                    new
+                                    {
+                                        Email = email,
+                                        Code = code,
+                                        Password = password,
+                                        ConfirmPassword = confirmPassword
+                                    }),
+                                Encoding.UTF8,
+                                "application/json")
                     },
                     token);
         }
+
         /// <summary>
-        /// Uploads the profile image.
+        ///     Uploads the profile image.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="token">The token.</param>
         /// <returns>
-        /// The <see cref="Task" />.
+        ///     The <see cref="Task" />.
         /// </returns>
         public Task<GriklyHttpResponseMessage<string>> UploadProfileImage(
             byte[] data,
@@ -244,11 +257,11 @@ namespace GriklyApi
             imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("image/png");
 
             requestContent.Add(imageContent, "image", "image.png");
-            return this.Execute<string>(
-                new HttpRequestMessage(HttpMethod.Post, path) { Content = requestContent },
+            return Execute<string>(
+                new HttpRequestMessage(HttpMethod.Post, path) {Content = requestContent},
                 token);
         }
-        #endregion
 
+        #endregion
     }
 }

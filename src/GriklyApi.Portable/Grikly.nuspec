@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0"?>
+
 <package>
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
     <title>Grikly</title>
     <authors>Shawn Mclean</authors>
-    <owners>Xormis</owners>
+    <owners>$author$</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/Xormis/grikly-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

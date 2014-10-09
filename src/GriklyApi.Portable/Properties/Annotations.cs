@@ -6,10 +6,11 @@
 //   Indicates that marked element should be localized or not.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Grikly.Annotations
 {
-    using System;
-
     /// <summary>
     ///     Indicates that marked element should be localized or not.
     /// </summary>
@@ -37,14 +38,14 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizationRequiredAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="LocalizationRequiredAttribute" /> class.
         /// </summary>
         /// <param name="required">
-        /// <c>true</c> if a element should be localized; otherwise, <c>false</c>.
+        ///     <c>true</c> if a element should be localized; otherwise, <c>false</c>.
         /// </param>
         public LocalizationRequiredAttribute(bool required)
         {
-            this.Required = required;
+            Required = required;
         }
 
         #endregion
@@ -63,18 +64,18 @@ namespace Grikly.Annotations
         #region Public Methods and Operators
 
         /// <summary>
-        /// Returns whether the value of the given object is equal to the current <see cref="LocalizationRequiredAttribute"/>.
+        ///     Returns whether the value of the given object is equal to the current <see cref="LocalizationRequiredAttribute" />.
         /// </summary>
         /// <param name="obj">
-        /// The object to test the value equality of.
+        ///     The object to test the value equality of.
         /// </param>
         /// <returns>
-        /// <c>true</c> if the value of the given object is equal to that of the current; otherwise, <c>false</c>.
+        ///     <c>true</c> if the value of the given object is equal to that of the current; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
             var attribute = obj as LocalizationRequiredAttribute;
-            return attribute != null && attribute.Required == this.Required;
+            return attribute != null && attribute.Required == Required;
         }
 
         /// <summary>
@@ -113,15 +114,15 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringFormatMethodAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="StringFormatMethodAttribute" /> class.
         ///     Initializes new instance of StringFormatMethodAttribute
         /// </summary>
         /// <param name="formatParameterName">
-        /// Specifies which parameter of an annotated method should be treated as format-string
+        ///     Specifies which parameter of an annotated method should be treated as format-string
         /// </param>
         public StringFormatMethodAttribute(string formatParameterName)
         {
-            this.FormatParameterName = formatParameterName;
+            FormatParameterName = formatParameterName;
         }
 
         #endregion
@@ -232,14 +233,14 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute" /> class.
         /// </summary>
         /// <param name="parameterName">
-        /// The parameter name.
+        ///     The parameter name.
         /// </param>
         public NotifyPropertyChangedInvocatorAttribute(string parameterName)
         {
-            this.ParameterName = parameterName;
+            ParameterName = parameterName;
         }
 
         #endregion
@@ -360,10 +361,10 @@ namespace Grikly.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContractAnnotationAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="ContractAnnotationAttribute" /> class.
         /// </summary>
         /// <param name="fdt">
-        /// The fdt.
+        ///     The fdt.
         /// </param>
         public ContractAnnotationAttribute([NotNull] string fdt)
             : this(fdt, false)
@@ -371,18 +372,18 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContractAnnotationAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="ContractAnnotationAttribute" /> class.
         /// </summary>
         /// <param name="fdt">
-        /// The fdt.
+        ///     The fdt.
         /// </param>
         /// <param name="forceFullStates">
-        /// The force full states.
+        ///     The force full states.
         /// </param>
         public ContractAnnotationAttribute([NotNull] string fdt, bool forceFullStates)
         {
-            this.FDT = fdt;
-            this.ForceFullStates = forceFullStates;
+            FDT = fdt;
+            ForceFullStates = forceFullStates;
         }
 
         #endregion
@@ -429,7 +430,7 @@ namespace Grikly.Annotations
     /// }
     /// </code>
     /// </example>
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, 
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false,
         Inherited = true)]
     public sealed class CannotApplyEqualityOperatorAttribute : Attribute
     {
@@ -451,21 +452,21 @@ namespace Grikly.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    [BaseTypeRequired(typeof(Attribute))]
+    [BaseTypeRequired(typeof (Attribute))]
     public sealed class BaseTypeRequiredAttribute : Attribute
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTypeRequiredAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="BaseTypeRequiredAttribute" /> class.
         ///     Initializes new instance of BaseTypeRequiredAttribute
         /// </summary>
         /// <param name="baseType">
-        /// Specifies which types are required
+        ///     Specifies which types are required
         /// </param>
         public BaseTypeRequiredAttribute(Type baseType)
         {
-            this.BaseTypes = new[] { baseType };
+            BaseTypes = new[] {baseType};
         }
 
         #endregion
@@ -499,26 +500,26 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
         /// </summary>
         /// <param name="useKindFlags">
-        /// The use kind flags.
+        ///     The use kind flags.
         /// </param>
         /// <param name="targetFlags">
-        /// The target flags.
+        ///     The target flags.
         /// </param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
-            this.UseKindFlags = useKindFlags;
-            this.TargetFlags = targetFlags;
+            UseKindFlags = useKindFlags;
+            TargetFlags = targetFlags;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
         /// </summary>
         /// <param name="useKindFlags">
-        /// The use kind flags.
+        ///     The use kind flags.
         /// </param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags)
@@ -527,10 +528,10 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
         /// </summary>
         /// <param name="targetFlags">
-        /// The target flags.
+        ///     The target flags.
         /// </param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseTargetFlags targetFlags)
@@ -576,26 +577,26 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
         /// </summary>
         /// <param name="useKindFlags">
-        /// The use kind flags.
+        ///     The use kind flags.
         /// </param>
         /// <param name="targetFlags">
-        /// The target flags.
+        ///     The target flags.
         /// </param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
-            this.UseKindFlags = useKindFlags;
-            this.TargetFlags = targetFlags;
+            UseKindFlags = useKindFlags;
+            TargetFlags = targetFlags;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
         /// </summary>
         /// <param name="useKindFlags">
-        /// The use kind flags.
+        ///     The use kind flags.
         /// </param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags)
@@ -604,10 +605,10 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
         /// </summary>
         /// <param name="targetFlags">
-        /// The target flags.
+        ///     The target flags.
         /// </param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseTargetFlags targetFlags)
@@ -643,28 +644,28 @@ namespace Grikly.Annotations
         /// <summary>
         ///     The default.
         /// </summary>
-        Default = Access | Assign | InstantiatedWithFixedConstructorSignature, 
+        Default = Access | Assign | InstantiatedWithFixedConstructorSignature,
 
         /// <summary>
         ///     Only entity marked with attribute considered used
         /// </summary>
-        Access = 1, 
+        Access = 1,
 
         /// <summary>
         ///     Indicates implicit assignment to a member
         /// </summary>
-        Assign = 2, 
+        Assign = 2,
 
         /// <summary>
         ///     Indicates implicit instantiation of a type with fixed constructor signature.
         ///     That means any unused constructor parameters won't be reported as such.
         /// </summary>
-        InstantiatedWithFixedConstructorSignature = 4, 
+        InstantiatedWithFixedConstructorSignature = 4,
 
         /// <summary>
         ///     Indicates implicit instantiation of a type
         /// </summary>
-        InstantiatedNoFixedConstructorSignature = 8, 
+        InstantiatedNoFixedConstructorSignature = 8,
     }
 
     /// <summary>
@@ -677,17 +678,17 @@ namespace Grikly.Annotations
         /// <summary>
         ///     The default.
         /// </summary>
-        Default = Itself, 
+        Default = Itself,
 
         /// <summary>
         ///     The itself.
         /// </summary>
-        Itself = 1, 
+        Itself = 1,
 
         /// <summary>
         ///     Members of entity marked with attribute are considered used
         /// </summary>
-        Members = 2, 
+        Members = 2,
 
         /// <summary>
         ///     Entity marked with attribute and all its members considered used
@@ -711,10 +712,10 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PublicAPIAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PublicAPIAttribute" /> class.
         /// </summary>
         /// <param name="comment">
-        /// The comment.
+        ///     The comment.
         /// </param>
         public PublicAPIAttribute(string comment)
         {
@@ -774,15 +775,15 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathReferenceAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PathReferenceAttribute" /> class.
         /// </summary>
         /// <param name="basePath">
-        /// The base path.
+        ///     The base path.
         /// </param>
         [UsedImplicitly]
         public PathReferenceAttribute([PathReference] string basePath)
         {
-            this.BasePath = basePath;
+            BasePath = basePath;
         }
 
         #endregion
@@ -819,14 +820,14 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcActionAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcActionAttribute" /> class.
         /// </summary>
         /// <param name="anonymousProperty">
-        /// The anonymous property.
+        ///     The anonymous property.
         /// </param>
         public AspMvcActionAttribute(string anonymousProperty)
         {
-            this.AnonymousProperty = anonymousProperty;
+            AnonymousProperty = anonymousProperty;
         }
 
         #endregion
@@ -861,14 +862,14 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcAreaAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcAreaAttribute" /> class.
         /// </summary>
         /// <param name="anonymousProperty">
-        /// The anonymous property.
+        ///     The anonymous property.
         /// </param>
         public AspMvcAreaAttribute(string anonymousProperty)
         {
-            this.AnonymousProperty = anonymousProperty;
+            AnonymousProperty = anonymousProperty;
         }
 
         #endregion
@@ -903,14 +904,14 @@ namespace Grikly.Annotations
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcControllerAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcControllerAttribute" /> class.
         /// </summary>
         /// <param name="anonymousProperty">
-        /// The anonymous property.
+        ///     The anonymous property.
         /// </param>
         public AspMvcControllerAttribute(string anonymousProperty)
         {
-            this.AnonymousProperty = anonymousProperty;
+            AnonymousProperty = anonymousProperty;
         }
 
         #endregion
