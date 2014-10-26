@@ -34,7 +34,29 @@ namespace GriklyApi
                     },
                     token);
         }
-
+        /// <summary>
+        /// Updates the event.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="eventModel">The event model.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public Task<GriklyHttpResponseMessage> UpdateEvent(Guid id, EventModel eventModel,
+            CancellationToken token)
+        {
+            string path = string.Format("v1/Events/{0}", id);
+            return
+                Execute(
+                    new HttpRequestMessage(HttpMethod.Put, path)
+                    {
+                        Content =
+                            new StringContent(
+                                JsonConvert.SerializeObject(eventModel),
+                                Encoding.UTF8,
+                                "application/json"),
+                    },
+                    token);
+        }
         /// <summary>
         ///     Gets the event by identifier.
         /// </summary>

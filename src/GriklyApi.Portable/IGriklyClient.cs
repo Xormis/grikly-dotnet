@@ -278,5 +278,15 @@ namespace Grikly
         /// <returns></returns>
         Task<GriklyHttpResponseMessage<PagingModel<EventModel>>> GetOwnedEvents(GetEventsRequest request,
             CancellationToken token);
+
+        /// <summary>
+        /// Updates the event.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="eventModel">The event model.</param>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        Task<GriklyHttpResponseMessage> UpdateEvent(Guid id, EventModel eventModel,
+            CancellationToken token);
     }
 }
