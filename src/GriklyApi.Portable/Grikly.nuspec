@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Grikly</id>
-    <version>$version$</version>
+    <version>1.0.36</version>
     <title>Grikly</title>
     <authors>Shawn Mclean</authors>
     <owners>Xormis</owners>
