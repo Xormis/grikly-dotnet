@@ -17,7 +17,7 @@ namespace Grikly.Tests.IntegrationTests
         protected TestBase()
         {
             var apiKey = ConfigurationManager.AppSettings["ApiKey"];
-            Client = new GriklyClient(apiKey, true);
+            Client = new GriklyClient(apiKey);
         }
     }
 }

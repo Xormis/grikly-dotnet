@@ -35,7 +35,6 @@ namespace GriklyApi
         #endregion
 
         #region Constructors and Destructors
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="GriklyClient" /> class.
         ///     Create an instance of the Grik.ly API client.
@@ -44,14 +43,14 @@ namespace GriklyApi
         /// </param>
         /// <param name="useSsl">
         /// </param>
-        /// <param name="useTestApi">
-        ///     Set to true if using the test API.
+        /// <param name="baseUrl">
+        ///     Default is empty, empty will resolve to production Grikly Servers.
         /// </param>
-        public GriklyClient(string apiKey, bool useTestApi = false)
+        public GriklyClient(string apiKey, string baseUrl = "")
         {
             ApiKey = apiKey;
 
-            string baseUrl = useTestApi ? Configuration.BASE_TEST_URL : Configuration.BASE_URL;
+            baseUrl = string.IsNullOrWhiteSpace(baseUrl) ? Configuration.BASE_URL : baseUrl;
 
             client = new HttpClient();
             client.BaseAddress = new Uri(baseUrl);
