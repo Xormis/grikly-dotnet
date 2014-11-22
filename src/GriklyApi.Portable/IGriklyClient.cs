@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using GriklyApi.Models;
 using GriklyApi.Models.Events;
+using GriklyApi;
 
 namespace Grikly
 {
@@ -245,6 +246,9 @@ namespace Grikly
         /// <returns></returns>
         Task<GriklyHttpResponseMessage<CreateEventResponse>> CreateEvent(EventModel eventModel, CancellationToken token);
 
+        Task<GriklyHttpResponseMessage<CreateOrganisationResponse>> CreateOrganisation(
+            OrganisationModel organisationModel, CancellationToken token);
+
         /// <summary>
         ///     Resends the confirmation.
         /// </summary>
@@ -288,5 +292,8 @@ namespace Grikly
         /// <returns></returns>
         Task<GriklyHttpResponseMessage> UpdateEvent(Guid id, EventModel eventModel,
             CancellationToken token);
+
+
     }
+
 }
